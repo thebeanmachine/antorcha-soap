@@ -1,0 +1,12 @@
+<% title "Antorcha" %>
+
+<p>
+  <strong>Url:</strong>
+  <%=h @antorcha.url %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_antorcha_path(@antorcha) %> |
+  <%= link_to "Destroy", @antorcha, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", antorchas_path %>
+</p>

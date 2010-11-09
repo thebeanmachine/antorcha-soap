@@ -1,0 +1,17 @@
+<% title "Antorchas" %>
+
+<table>
+  <tr>
+    <th>Url</th>
+  </tr>
+  <% for antorcha in @antorchas %>
+    <tr>
+      <td><%=h antorcha.url %></td>
+      <td><%= link_to "Show", antorcha %></td>
+      <td><%= link_to "Edit", edit_antorcha_path(antorcha) %></td>
+      <td><%= link_to "Destroy", antorcha, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Antorcha", new_antorcha_path %></p>

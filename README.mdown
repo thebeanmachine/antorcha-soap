@@ -1,0 +1,13 @@
+
+Installatie
+===========
+
+Het is belangrijk bundler te gebruiken!
+
+    bundle install
+    rake db:migrate
+    script/server
+    
+
+
+

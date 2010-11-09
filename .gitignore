@@ -1,0 +1,14 @@
+log/*.log
+tmp/**/*
+doc/api
+doc/app
+*.tmproj
+db/*.sqlite3
+db/*sqlite3-journal
+db/shared
+*.*~
+**.DS_Store
+capybara-*.html
+*.dot
+*.png
+coverage

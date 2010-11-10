@@ -4,6 +4,7 @@ describe Message do
 
   describe "unconfigured antorcha location" do
     it "should raise configuration error" do
+      pending
       lambda { Message.new }.should raise_exception(AntorchaConfigurationMissing)
     end
   end

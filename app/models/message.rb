@@ -1,5 +1,7 @@
 class Message < ActiveResource::Base
   
+  fortify :title, :body
+  
   def self.site
     puts Antorcha.first.url
     URI::parse Antorcha.first.url

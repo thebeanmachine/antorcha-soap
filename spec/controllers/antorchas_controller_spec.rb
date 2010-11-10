@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe AntorchasController do
   fixtures :all
-  integrate_views
 
   it "index action should render index template" do
     get :index
@@ -19,16 +18,22 @@ describe AntorchasController do
     response.should render_template(:new)
   end
   
-  it "create action should render new template when model is invalid" do
-    Antorcha.any_instance.stubs(:valid?).returns(false)
-    post :create
-    response.should render_template(:new)
-  end
+  describe "creating an antorcha" do
+    before(:each) do
+      stub_new mock_antorcha
+    end
 
-  it "create action should redirect when model is valid" do
-    Antorcha.any_instance.stubs(:valid?).returns(true)
-    post :create
-    response.should redirect_to(antorcha_url(assigns[:antorcha]))
+    it "should render new template when model is invalid" do
+      stub_unsuccessful_save_for mock_antorcha
+      post :create
+      response.should render_template(:new)
+    end
+
+    it "should redirect when model is valid" do
+      stub_successful_save_for mock_antorcha
+      post :create
+      response.should redirect_to(antorcha_url(assigns[:antorcha]))
+    end
   end
   
   it "edit action should render edit template" do
@@ -36,16 +41,21 @@ describe AntorchasController do
     response.should render_template(:edit)
   end
   
-  it "update action should render edit template when model is invalid" do
-    Antorcha.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => Antorcha.first
-    response.should render_template(:edit)
-  end
+  describe "updating an antorcha" do
+    before(:each) do
+      stub_find mock_antorcha
+    end
+    it "update action should render edit template when model is invalid" do
+      stub_unsuccessful_update mock_antorcha
+      put :update, :id => mock_antorcha.to_param
+      response.should render_template(:edit)
+    end
 
-  it "update action should redirect when model is valid" do
-    Antorcha.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => Antorcha.first
-    response.should redirect_to(antorcha_url(assigns[:antorcha]))
+    it "update action should redirect when model is valid" do
+      stub_successful_update mock_antorcha
+      put :update, :id => mock_antorcha.to_param
+      response.should redirect_to(antorcha_url(assigns[:antorcha]))
+    end
   end
   
   it "destroy action should destroy model and redirect to index action" do

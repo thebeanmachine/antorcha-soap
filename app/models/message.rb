@@ -3,7 +3,6 @@ class Message < ActiveResource::Base
   fortify :title, :body
   
   def self.site
-    puts Antorcha.first.url
     URI::parse Antorcha.first.url
   end
 
@@ -12,7 +11,6 @@ class Message < ActiveResource::Base
   end
   
   def self.connection(refresh = false)
-    puts "OW JA? #{site}"
     #if defined?(@connection) || superclass == Object
       @connection = ActiveResource::Connection.new(site, format) if refresh || @connection.nil?
       @connection.proxy = proxy if proxy

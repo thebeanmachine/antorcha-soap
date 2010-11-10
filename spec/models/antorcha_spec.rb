@@ -33,7 +33,7 @@ describe Antorcha do
   
   context "with an url argument http:///oeps.test.net" do
     it "should be invalid. But..." do
-      pending "We must modify the Regular Expression so that the argument 'http:///' also is invalid!"
+      pending "We must modify the Regular Expression. Argument like 'http:///' must also be invalid!"
     end
   end
   

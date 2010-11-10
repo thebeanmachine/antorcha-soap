@@ -3,7 +3,9 @@ class Message < ActiveResource::Base
   fortify :title, :body
   
   def self.site
-    URI::parse Antorcha.first.url
+    antorcha = Antorcha.instance
+    return URI::parse antorcha.url if antorcha
+    raise "Not configured"
   end
 
   def self.all

@@ -13,3 +13,4 @@ capybara-*.html
 *.png
 coverage
 .bundle
+*.komodoproject

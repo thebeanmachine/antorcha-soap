@@ -11,6 +11,9 @@ GEM
     activeresource (2.3.10)
       activesupport (= 2.3.10)
     activesupport (2.3.10)
+    daemons (1.1.0)
+    delayed_job (2.0.3)
+      daemons
     formtastic (1.1.0)
       actionpack (>= 2.3.0)
       activesupport (>= 2.3.0)
@@ -40,6 +43,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  delayed_job (= 2.0.3)
   formtastic (= 1.1.0)
   fortify (= 0.0.3)
   nifty-generators (= 0.4.2)

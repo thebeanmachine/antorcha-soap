@@ -5,7 +5,7 @@ class Antorcha < ActiveRecord::Base
   validates_uniqueness_of :url
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http'])
-  validate :only_one_antorcha_allowed
+  validate_on_create :only_one_created_antorcha_allowed
 
   
   def self.instance
@@ -16,7 +16,7 @@ class Antorcha < ActiveRecord::Base
   
   
   private
-  def only_one_antorcha_allowed
+  def only_one_created_antorcha_allowed
     errors.add_to_base 'Er is reeds een antorcha aangemaakt.' unless Antorcha.count == 0
   end
   

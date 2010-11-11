@@ -1,4 +1,4 @@
-<% title "Antorchas" %>
+<% title "Antorcha" %>
 
 <table>
   <tr>
@@ -14,4 +14,4 @@
   <% end %>
 </table>
 
-<p><%= link_to "New Antorcha", new_antorcha_path %></p>
+<p><%= link_to "New Antorcha", new_antorcha_path if Antorcha.count == 0%></p>

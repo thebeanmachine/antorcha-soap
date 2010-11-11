@@ -14,11 +14,12 @@ class Antorcha < ActiveRecord::Base
     raise AntorchaConfigurationMissing, "cannot contact antorcha because no antorcha location is configured"
   end
   
+  
+  private
   def only_one_antorcha_allowed
     errors.add_to_base 'Er is reeds een antorcha aangemaakt.' unless Antorcha.count == 0
   end
   
 end
 
-class AntorchaConfigurationMissing < Exception
-end
+

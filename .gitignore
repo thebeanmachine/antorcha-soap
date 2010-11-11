@@ -14,3 +14,4 @@ capybara-*.html
 coverage
 .bundle
 *.komodoproject
+bin

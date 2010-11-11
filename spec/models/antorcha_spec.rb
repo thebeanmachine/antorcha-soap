@@ -37,4 +37,11 @@ describe Antorcha do
     end
   end
   
+  context "with 1 record already in it's antorcha table" do
+    it "should be invalid" do
+      Antorcha.create(:url => "http://antorcha1.example.net")
+      Antorcha.create(:url => "http://antorcha2.example.net").should be_invalid
+    end
+  end
+  
 end

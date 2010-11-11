@@ -1,0 +1,3 @@
+
+class AntorchaConfigurationMissing < Exception
+end

@@ -2,16 +2,15 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Message do
 
-  describe "unconfigured antorcha location" do
+  describe "without configured antorcha location" do
     it "should raise configuration error" do
-      pending
-      lambda { Message.new }.should raise_exception(AntorchaConfigurationMissing)
+      lambda { Message.find(1) }.should raise_exception(AntorchaConfigurationMissing)
     end
   end
   
   describe "configured" do
     before(:each) do
-      Antorcha.stub :first => mock_antorcha
+      Antorcha.stub :instance => mock_antorcha
       mock_antorcha.stub :url => 'http://example.com:4000'
     end
 

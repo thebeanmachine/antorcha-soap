@@ -11,7 +11,7 @@ class Antorcha < ActiveRecord::Base
     return antorcha if antorcha
     raise AntorchaConfigurationMissing, "cannot contact antorcha because no antorcha location is configured"
   end
+  
 end
 
-class AntorchaConfigurationMissing < Exception
-end
+

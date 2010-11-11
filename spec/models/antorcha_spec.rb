@@ -37,4 +37,10 @@ describe Antorcha do
     end
   end
   
+  describe "instance method provides singleton" do
+    it "with no antorcha it should raise configuration error" do
+      lambda { Antorcha.instance }.should raise_exception(AntorchaConfigurationMissing)
+    end
+  end
+  
 end

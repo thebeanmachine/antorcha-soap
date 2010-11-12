@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
   
-  def create
-    render :text => "Wat zeggie?"
+  def create    
+    Delayed::Job.enqueue(FetchNewMessages.job.new)
   end
 
 end

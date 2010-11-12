@@ -36,6 +36,13 @@ describe Antorcha do
       pending "We must modify the Regular Expression. Argument like 'http:///' must also be invalid!"
     end
   end
+ 
+  context "with 1 record already in it's antorcha table" do
+    it "should be invalid" do
+      Antorcha.create(:url => "http://antorcha1.example.net")
+      Antorcha.create(:url => "http://antorcha2.example.net").should be_invalid
+    end
+  end
   
   describe "instance method provides singleton" do
     it "with no antorcha it should raise configuration error" do

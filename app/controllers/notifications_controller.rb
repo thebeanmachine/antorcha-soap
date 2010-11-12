@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
   
   def create    
-    Delayed::Job.enqueue(FetchNewMessages.job.new)
+    Delayed::Job.enqueue(Jobs::FetchNewMessagesJob.new)
   end
 
 end

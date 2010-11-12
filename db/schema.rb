@@ -9,12 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101109141641) do
+ActiveRecord::Schema.define(:version => 20101111142334) do
 
   create_table "antorchas", :force => true do |t|
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "operations", :force => true do |t|
+    t.integer  "message_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "operations", ["message_id"], :name => "index_operations_on_message_id", :unique => true
 
 end

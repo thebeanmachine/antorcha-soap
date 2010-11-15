@@ -1,6 +1,10 @@
 class AntorchasController < ApplicationController
   def index
-    @antorchas = Antorcha.all
+    if Antorcha.count == 0
+      @antorcha = Antorcha.new
+    else
+      @antorcha = Antorcha.first
+    end
   end
   
   def show

@@ -6,6 +6,7 @@ gem "formtastic", "1.1.0"
 gem "searchlogic", "2.4.27"
 gem "fortify", "0.0.3"
 gem "delayed_job", "2.0.3"
+gem "less"
 
 # bundler requires these gems in all environments
 # gem "nokogiri", "1.4.2"

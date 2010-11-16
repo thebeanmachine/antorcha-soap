@@ -3,12 +3,20 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe AntorchasController do
   
   context "with GET index" do    
-    it "should render the index template" do
-      Antorcha.should_receive(:all).and_return(mock_antorchas)
+    it "should render new when no connection exists" do
+      Antorcha.should_receive(:new).and_return(mock_antorcha)
+      Antorcha.should_not_receive(:all)
+      get :index
+      response.should render_template(:index)
+    end
+    it "should render the first when a connection exist" do
+      Antorcha.stub(:count).and_return(1)
+      Antorcha.should_receive(:first).and_return(mock_antorcha)
       get :index
       response.should render_template(:index)
     end
   end
+  
   
   context "with GET show and an id" do    
     it "should render the show template" do

@@ -1,17 +1,12 @@
 <% title "Antorcha" %>
+<h2>Overzicht</h2>
 
-<table>
-  <tr>
-    <th>Url</th>
-  </tr>
-  <% for antorcha in @antorchas %>
-    <tr>
-      <td><%=h antorcha.url %></td>
-      <td><%= link_to "Show", antorcha %></td>
-      <td><%= link_to "Edit", edit_antorcha_path(antorcha) %></td>
-      <td><%= link_to "Destroy", antorcha, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
+<% if Antorcha.count == 0 %>
+<p>Deze koppeling koppelt Zorg voor Jeugd met een Antorcha. U dient de locatie van deze koppeling nog te definieren:</p>
+	<%= render :partial => 'form' %>
 
-<p><%= link_to "New Antorcha", new_antorcha_path if Antorcha.count == 0%></p>
+<% else %>
+
+	<p>Deze koppeling koppelt Zorg voor Jeugd met een Antorcha die draait op de volgende locatie <%=link_to @antorcha.url,@antorcha.url %> <small>(<%= link_to "Vernietig deze koppeling", @antorcha, :confirm => "Weet u zeker dat u de koppeling met #{@antorcha.url} wilt verbreken?", :method => :delete %>)</small></p>
+
+<% end %>

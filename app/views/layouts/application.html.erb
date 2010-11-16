@@ -1,28 +1,41 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title><%= h(yield(:title) || "Untitled") %></title>
-    <%= stylesheet_link_tag 'application', 'formtastic' %>
-    <%= yield(:head) %>
-  </head>
-  <body>
-    <div id="container">
-        <div id="nav">
-            <%= link_to "Antorcha", antorchas_path %> |
-            <%= link_to "Berichten", messages_path %> |
-            <%= link_to "Operations", operations_path %>
-        </div>
-        
-      <%- flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <%- end -%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-      <%- if show_title? -%>
-        <h1><%=h yield(:title) %></h1>
-      <%- end -%>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title> <%= t "activerecord.models.#{controller.controller_name.singularize}", :count => 2 %> - <%= t controller.action_name %></title>
+  <%= stylesheet_link_tag 'formtastic', 'formtastic_changes', 'application', :cache => true %>
+	
+	<%= javascript_include_tag :all, :cache => true %>
+</head>
+<body class="<%= controller.controller_name %>">
+	
+	<%= debug current_user if ENV['USER'] == 'robin' and current_user and Rails.env.development? %>
+	
+  <div id="page_container">
+ 	 <div id="header">
+			<div id="logo">
+				<a href="/"><img src="/images/header_logo.png" alt="Antorcha"></a>
+			</div>
+			<h1>Zorg voor Jeugd koppeling</h1>
+		</div>
+	
+		<% flash.each do |name, message| %>
+			<%= content_tag :div, message, :class => "flash #{name}" %>
+		<% end %>
+			
+	  <div id="page">
+			<div id="breadcrumb"><%= yield(:breadcrumb) %>
+			</div>
+		  <div id="main">
+				<%= yield %>
+			</div>
+			<div id="sidebar">
+		 		<%= yield(:sidebar) %>
 
-      <%= yield %>
-    </div>
-  </body>
+			</div>
+	  </div>
+	</div>
+</body>
 </html>

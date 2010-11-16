@@ -4,7 +4,7 @@ module CatchUniqueConstraintViolation
       create_or_update_without_catch_unique
     rescue ActiveRecord::StatementInvalid => e
       if detect_sqlite_constraint_violation e
-        errors.add :message_id, "has already been taken (in the database)"
+        errors.add :message_id, "het unieke nummer voor het bericht is al reeds in gebruik (in de database)"
       end
       false
     end

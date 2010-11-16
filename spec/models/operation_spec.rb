@@ -14,14 +14,14 @@ describe Operation do
   it "should validate uniqueness" do
     Operation.create! :message_id => 1
     o = Operation.create :message_id => 1
-    o.errors.on(:message_id).should =~ /has already been taken/
+    o.errors.on(:message_id).should =~ /is niet beschikbaar/
   end
 
   it "should validate uniqueness even if it hits the database unique index" do
     Operation.create! :message_id => 1
     o = Operation.create! :message_id => 2
     o.update_attribute :message_id, 1
-    o.errors.on(:message_id).should =~ /has already been taken/
+    o.errors.on(:message_id).should =~ /reeds in gebruik/
   end
 
 end

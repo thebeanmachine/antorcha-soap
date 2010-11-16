@@ -7,6 +7,6 @@
 
 <% else %>
 
-	<p>Deze koppeling koppelt Zorg voor Jeugd met een Antorcha die draait op de volgende locatie <%=link_to @antorcha.url,@antorcha.url %> <small>(<%= link_to "Vernietig deze koppeling", @antorcha, :confirm => "Weet u zeker dat u de koppeling met #{@antorcha.url} wilt verbreken?", :method => :delete %>)</small></p>
+	<p>Deze koppeling koppelt Zorg voor Jeugd met een Antorcha die draait op de volgende locatie <%=link_to @antorcha.url,@antorcha.url %> <small>(<%= link_to "Vernietig deze koppeling", @antorcha, :confirm => "Weet u zeker dat u de koppeling met #{@antorcha.url} wilt verbreken?", :method => :delete %>)</small>. U kunt de verbinding controleren door te kijken of u de <%= link_to 'lijst met berichten', messages_path %> kunt ophalen.</p>
 
 <% end %>

@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
     redirect_to edit_antorcha_url(Antorcha.instance), :notice => "Er kon geen verbinding gemaakt worden met de antorcha omdat de opgegeven naam en wachtwoord geen toegang heeft tot het systeem."
   end
   
+  rescue_from "ActiveResource::Redirection" do
+    redirect_to edit_antorcha_url(Antorcha.instance), :notice => "Er kon geen verbinding gemaakt worden met de antorcha omdat er geen inloggegevens zijn opgegeven."
+  end
+  
   rescue_from "Errno::ECONNREFUSED" do
     redirect_to edit_antorcha_url(Antorcha.instance), :notice => "Er kon geen verbinding gemaakt worden met de antorcha omdat de connectie werd geweigerd."
   end

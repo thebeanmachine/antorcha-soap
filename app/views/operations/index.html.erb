@@ -1,20 +1,26 @@
-<h1>Listing operations</h1>
+<h2>Alle operaties</h2>
+<p>Operaties worden gestart na het ontvangen van een bericht. Ziet u geen operaties, verzeker uzelf er dan van dat het achtergrond proces ('delayed_job') draait.</p>
 
 <table>
   <tr>
-    <th>Message</th>
+    <th>Bericht ID</th>
   </tr>
 
 <% @operations.each do |operation| %>
   <tr>
     <td><%=h operation.message_id %></td>
-    <td><%= link_to 'Show', operation %></td>
-    <td><%= link_to 'Edit', edit_operation_path(operation) %></td>
-    <td><%= link_to 'Destroy', operation, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Toon', operation %></td>
+    <td><%= link_to 'Bewerk', edit_operation_path(operation) %></td>
+    <td><%= link_to 'Vernietig', operation, :confirm => 'Weet u dit zeker?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New operation', new_operation_path %>
+<% content_for :sidebar do %>
+<h3>Hoe start ik 'delayed_job'?</h3>
+<p>Draai vanuit de console/terminal:</p>
+<pre><p>ruby script/delayed_job start</p>	</pre>
+<h3>Hoe controleer ik of delayed_job draait?</h3>
+<p>Draai vanuit de console/terminal:</p>
+<pre><p>ruby script/delayed_job status</p>	</pre>
+<% end%>

@@ -1,14 +1,14 @@
 <% title "Alle berichten" %>
 <h2>Overzicht van alle berichten op deze antorcha</h2>
 
-<table>
+<table class="styled">
   <tr>
     <th>Titel</th>
     <th>Berichtinhoud</th>
   </tr>
   <% for message in @messages %>
     <tr>
-      <td><%=h message.title %></td>
+      <td><%=link_to message.title, message %></td>
       <td><%=h message.body %></td>
     </tr>
   <% end %>

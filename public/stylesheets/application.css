@@ -367,3 +367,6 @@ pre {
   font-size: 110%;
 }
 table#castables td { padding-left: 1em; }
+table.styled { margin: 1%; }
+table.styled td { text-align: left; }
+table.styled th { text-align: left; }

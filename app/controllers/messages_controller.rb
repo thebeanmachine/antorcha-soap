@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
     
   def index
-    @messages = Message.all
+    @messages = Message.find(:all, :conditions=>{:inbox => true, :unexpired => true, :unread => true, :notcancelled => true})
   end
   
   def show

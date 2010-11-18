@@ -1,20 +1,29 @@
-<h1>Listing operations</h1>
-
-<table>
+<h2>Alle operaties</h2>
+<p>Operaties worden gestart na het ontvangen van een bericht, en betreft bijvoorbeeld de operatie om een bericht te verwerken met een extern systeem. Ziet u geen operaties, verzeker uzelf er dan van dat het achtergrond proces ('delayed_job') draait.</p>
+<p><strong>Belangrijk: dit werkt nog niet, er wordt nog niets concreets gedaan in een operatie. Enkel een demonstratie dat operaties aangemaakt worden!</strong></p>
+<table class="styled">
   <tr>
-    <th>Message</th>
+    <th>Bericht ID</th>
+		<th>Gemaakt op</th>
+		<th>Gewijzigd op</th>
+		<th>Status</th>
   </tr>
 
 <% @operations.each do |operation| %>
   <tr>
     <td><%=h operation.message_id %></td>
-    <td><%= link_to 'Show', operation %></td>
-    <td><%= link_to 'Edit', edit_operation_path(operation) %></td>
-    <td><%= link_to 'Destroy', operation, :confirm => 'Are you sure?', :method => :delete %></td>
+		<td><%=h operation.created_at %></td>
+		<td><%=h operation.updated_at %></td>
+		<td>status?</td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New operation', new_operation_path %>
+<% content_for :sidebar do %>
+<h3>Hoe start ik 'delayed_job'?</h3>
+<p>Draai vanuit de console/terminal:</p>
+<pre><p>ruby script/delayed_job start</p>	</pre>
+<h3>Hoe controleer ik of delayed_job draait?</h3>
+<p>Draai vanuit de console/terminal:</p>
+<pre><p>ruby script/delayed_job status</p>	</pre>
+<% end%>

@@ -11,7 +11,7 @@ class Antorcha < ActiveRecord::Base
   def self.instance
     antorcha = Antorcha.first
     return antorcha if antorcha
-    raise AntorchaConfigurationMissing, "cannot contact antorcha because no antorcha location is configured"
+    raise AntorchaConfigurationMissing, "Kan geen verbinding maken met een Antorcha omdat deze niet is geconfigureerd"
   end
   
   

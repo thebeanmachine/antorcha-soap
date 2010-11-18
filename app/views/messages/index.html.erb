@@ -1,20 +1,15 @@
-<% title "Messages" %>
+<% title "Alle berichten" %>
+<h2>Overzicht van alle berichten op deze antorcha</h2>
 
-<table>
+<table class="styled">
   <tr>
-    <th>Title</th>
-    <th>Body</th>
+    <th>Titel</th>
+    <th>Berichtinhoud</th>
   </tr>
   <% for message in @messages %>
     <tr>
-      <td><%=h message.title %></td>
+      <td><%=link_to message.title, message %></td>
       <td><%=h message.body %></td>
-      <td><%= link_to "Show", message %></td>
-      <td><%= link_to "Edit", edit_message_path(message) %></td>
-      <td><%= link_to "Destroy", message, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
-
-
-<p><%= link_to "New Message", new_message_path %></p>

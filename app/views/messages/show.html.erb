@@ -1,16 +1,14 @@
 <% title "Message" %>
 
 <p>
-  <strong>Title:</strong>
+  <strong>Titel:</strong>
   <%=h @message.title %>
 </p>
 <p>
-  <strong>Body:</strong>
+  <strong>Inhoud:</strong>
   <%=h @message.body %>
 </p>
 
 <p>
-  <%= link_to "Edit", edit_message_path(@message) %> |
-  <%= link_to "Destroy", @message, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", messages_path %>
+  <%= link_to "Bekijk alle berichten", messages_path %>
 </p>

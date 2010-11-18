@@ -1,0 +1,216 @@
+nl:
+  message:
+    status:
+      delivered: "Aangekomen"
+      sent: "Verstuurd"
+      draft: "Concept"
+  view:
+    message:
+      show:
+        status:
+          incoming: "Bericht is ontvangen op {{created_at}}."
+          sent: "Bericht is in postvak uit geplaatst om {{sent_at}} en wordt verzonden."
+          delivered: "Bericht is aangekomen om {{delivered_at}}."
+          draft: "Bericht is een conceptbericht en is nog niet verstuurd."
+      scope:
+        user_id: "voor uw bestemd"
+        unread: "Ongelezen"
+        read: "Gelezen"
+        inbox: "Inkomende"
+        outbox: "Uitgaande"
+        expired: "Verlopen"
+        unexpired: "Niet verlopen"
+        cancelled: "Geannuleerd"
+        notcancelled: "Niet geannuleerd"
+
+  messages: "Berichten"
+  transactions: "Transacties"
+  transaction_initiations: "Transactie starten"
+  titles:
+    steps:
+      index: Stappen
+  index: "Overzicht"
+  new: "Nieuw"
+  edit: "Bewerken"
+  show: "Tonen"
+  create: "Maken"
+  devise:
+    sessions:
+      user:
+        unauthenticated: "U dient eerst in te loggen."
+        invalid: "Ongeldige gebruikersnaam en/of wachtwoord"
+      link: "Inloggen"
+    registrations:
+      link: "Registreren"
+      
+  formtastic:
+    labels:
+      organization_ids: Filter op betrokken organisaties
+    hints:
+      step:
+        destination_url: Bijvoorbeeld http://example.com/messages
+        causes: 'Stappen die kunnen leiden tot deze stap.'
+      url: "bijvoorbeeld http://gebruikersnaam:wachtwoord@antorcha.local:3000/"
+      user:
+        password: Dient minimaal uit 6 tekens te bestaan.
+        password_confirmation: Voor controle van het wachtwoord.
+    actions:
+      create: "Maak {{model}}"
+      update: "Bewaar veranderingen"
+      dummie: "Start!"
+
+  action:
+    new: "Nieuw {{model}}"
+    cancel: "Annuleer {{model}}"
+    edit: "Bewerk {{model}}"
+    destroy: "Vernietig {{model}}"
+    send: "Verstuur {{model}}"
+    reply: "Reageer op {{model}}"
+  
+  notice:
+    created: "{{model}} was succesvol aangemaakt."
+    updated: "{{model}} was succesvol gewijzigd."
+  
+      
+  activerecord:
+    models:
+      definition:
+        one: Transactiedefinitie
+        other: Transactiedefinities
+      delivery:
+        one: Wachtrij
+        other: Wachtrij  
+      antorcha:
+        one: Antorcha
+        other: Antorcha's
+      operation:
+        one: Operatie
+        other: Operaties
+      step:
+        one: Stap
+        other: Stappen
+      transaction:
+        one: Transactie
+        other: Transacties
+      transaction_initiation:
+        other: Transacties
+      message:
+        one: Bericht
+        other: Berichten
+      transaction_message:
+        other: Transactieberichten
+      message_reply:
+        one: Antwoord
+        other: Antwoorden
+      worker:
+        one: Engine
+        other: Engine
+      reaction:
+        one: Reactie
+        other: Reacties
+      registration:
+        other: Gebruikers
+      user:
+        one: Gebruiker
+        other: Gebruikers
+      castable:
+        one: Roltoekenning
+        other: Roltoekenningen
+      role:
+        one: Rol
+        other: Rollen
+      organization:
+        one: Organisatie
+        other: Organisaties
+      processing:
+        one: Logboek entry
+        other: Logboek
+      session:
+        other: Sessie
+      identity: Identiteit
+      notifier:
+        one: Kennisgever
+        other: Kennisgevers
+    
+    attributes:
+      transaction:
+        title: Titel
+        definition: Definitie
+        starting_step: Startstap
+      definition:
+        title: Titel
+      user:
+        username: Gebruikersnaam
+        email: E-mailadres
+        password: Wachtwoord
+        password_confirmation: Wachtwoord bevestiging
+      step:
+        title: Titel
+        causes: Oorzaken
+        destination_url: Bestemming
+        start: Start van de definitie
+        recipient_roles: Wordt verstuurd naar
+        permission_roles: Toegankelijk voor
+      message:
+        title: Titel
+        body: Berichtinhoud
+      reaction:
+        cause: Oorzaak
+        effect: Gevolg
+      organization:
+        title: Titel
+        url: Bestemming
+        roles: Rollen
+      identity:
+        organization: Organisatie
+        private_key: Privésleutel
+
+  nl:
+    errors:
+      messages:
+        not_found: "Gebruiker niet gevonden"
+        already_confirmed: "Gebruiker is reeds bevestigd"
+        not_locked: "Deze account is niet gesloten"
+
+  devise:
+    failure:
+      unauthenticated: 'U dient in te loggen of te registreren.'
+      unconfirmed: 'U dient eerst uw account te bevestigen.'
+      locked: 'Uw account is gelocked.'
+      invalid: 'Ongeldig e-mailadres of wachtwoord.'
+      invalid_token: 'Invalide authenticiteit token.'
+      timeout: 'Uw sessie is verlopen, log a.u.b. opnieuw in.'
+      inactive: 'Uw account is nog niet geactiveerd.'
+    sessions:
+      signed_in: 'U bent succesvol ingelogd.'
+      signed_out: 'U bent succesvol uitgelogd.'
+      unauthenticated: 'U dient in te loggen of te registreren.'
+      unconfirmed: 'U dient eerst uw account te bevestigen.'
+      link: 'Inloggen'
+      user:
+        invalid: 'Ongeldig e-mailadres of wachtwoord.'
+        invalid_token: 'Invalide authenticiteit token.'
+        timeout: 'Uw sessie is verlopen, log a.u.b. opnieuw in.'
+        inactive: 'Uw account is nog niet geactiveerd.'
+    passwords:
+      send_instructions: 'U ontvangt via e-mailadres instructies hoe je je wachtwoord moet resetten.'
+      updated: 'Uw wachtwoord is gewijzigd. U bent nu ingelogd.'
+    confirmations:
+      send_instructions: 'U ontvangt via e-mailadres instructies hoe u uw account kan bevestigen.'
+      confirmed: 'Uw account is bevestigd.'
+    registrations:
+      signed_up: 'U bent inschreven.'
+      updated: 'Uw accountgegevens zijn opgeslagen.'
+      destroyed: 'Uw account is verwijderd, wellicht tot ziens!'
+      link: 'Registreren'
+    unlocks:
+      send_instructions: 'U ontvangt via e-mailadres instructies hoe u uw account kan ontgrendelen.'
+      unlocked: 'Uw account is ontgrendeld. U kunt nu weer inloggen.'
+    mailer:
+      confirmation_instructions:
+        subject: 'Bevestiging'
+      reset_password_instructions:
+        subject: 'Wachtwoord resetten'
+      unlock_instructions:
+        subject: 'Ontgrendel instructies'
+        

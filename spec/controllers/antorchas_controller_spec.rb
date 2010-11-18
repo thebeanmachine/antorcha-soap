@@ -83,7 +83,7 @@ describe AntorchasController do
     it "should redirect when model is valid" do
       stub_successful_save_for mock_antorcha
       post :create
-      response.should redirect_to(antorcha_url(assigns[:antorcha]))
+      response.should redirect_to(antorchas_url)
     end
   end
   

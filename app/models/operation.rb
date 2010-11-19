@@ -23,11 +23,38 @@ class Operation < ActiveRecord::Base
         <SOAP-ENV:Body>
         
           <zvj:SignaleringRequest xmlns:zvj="http://model.zvj.nl/signalering/">
-            <Organisatie>Thorax</Organisatie>
-            <BurgerServiceNummer>12345678</BurgerServiceNummer>
+            <Organisatie>
+              <zvj:OrganisatieType>
+                <Organisatie>Thorax</Organisatie>
+                <OrganisatiePostcode>3800AD</OrganisatiePostcode>
+                <Gebruiker>Snagel</Gebruiker>
+              </zvj:OrganisatieType>
+            </Organisatie>
+            <BurgerServiceNummer>
+              <zvj:BurgerServiceNummerType>000000000</zvj:BurgerServiceNummerType>
+            </BurgerServiceNummer>
             <GeboorteDatum>11/11/2001</GeboorteDatum>
-            <Jongere>HENKIE</Jongere>
-            <SignaalType>2</SignaalType>
+            <Jongere>
+              <zvj:JongereType>
+                <Voorletters>ABC</Voorletters>
+                <Jongereadres>
+                  <zvj:JongereAdresType>
+                    <Postcodecijfers>
+                      <zjv:PostcodeCijfersType>0000</zjv:PostcodeCijfersType>
+                    </Postcodecijfers>
+                    <Postcodeletters>
+                      <zjv:PostcodeLettersType>AA</zjv:PostcodeLettersType>
+                    </Postcodeletters>
+                    <Huisnummer>
+                      100
+                    </Huisnummer>
+                  </zvj:JongereAdresType>
+                </Jongereadres>
+              </zvj:JongereType>
+            </Jongere>
+            <SignaalType>
+              <zjv:SignaalType>2</zvj:SignaalType>
+            </SignaalType>
             <mutatienummer>123123123</mutatienummer>
           </zvj:SignaleringRequest>
   
@@ -81,11 +108,38 @@ class Operation < ActiveRecord::Base
         <SOAP-ENV:Body>
         
           <zvj:SignaleringRequest xmlns:zvj="http://model.zvj.nl/signalering/">
-            <Organisatie>Thorax</Organisatie>
-            <BurgerServiceNummer>12345678</BurgerServiceNummer>
+            <Organisatie>
+              <zvj:OrganisatieType>
+                <Organisatie>Thorax</Organisatie>
+                <OrganisatiePostcode>3800AD</OrganisatiePostcode>
+                <Gebruiker>Snagel</Gebruiker>
+              </zvj:OrganisatieType>
+            </Organisatie>
+            <BurgerServiceNummer>
+              <zvj:BurgerServiceNummerType>000000000</zvj:BurgerServiceNummerType>
+            </BurgerServiceNummer>
             <GeboorteDatum>11/11/2001</GeboorteDatum>
-            <Jongere>HENKIE</Jongere>
-            <SignaalType>2</SignaalType>
+            <Jongere>
+              <zvj:JongereType>
+                <Voorletters>ABC</Voorletters>
+                <Jongereadres>
+                  <zvj:JongereAdresType>
+                    <Postcodecijfers>
+                      <zjv:PostcodeCijfersType>0000</zjv:PostcodeCijfersType>
+                    </Postcodecijfers>
+                    <Postcodeletters>
+                      <zjv:PostcodeLettersType>AA</zjv:PostcodeLettersType>
+                    </Postcodeletters>
+                    <Huisnummer>
+                      100
+                    </Huisnummer>
+                  </zvj:JongereAdresType>
+                </Jongereadres>
+              </zvj:JongereType>
+            </Jongere>
+            <SignaalType>
+              <zjv:SignaalType>2</zvj:SignaalType>
+            </SignaalType>
             <mutatienummer>123123123</mutatienummer>
           </zvj:SignaleringRequest>
   

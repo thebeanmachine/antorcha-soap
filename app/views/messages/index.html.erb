@@ -6,7 +6,7 @@
     <th>Titel</th>
     <th>Berichtinhoud</th>
   </tr>
-  <% for message in @messages %>
+  <% @messages.each do |message| %>
     <tr>
       <td><%=link_to message.title, message %></td>
       <td><%=h message.body %></td>

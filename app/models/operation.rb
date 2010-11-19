@@ -6,7 +6,7 @@ class Operation < ActiveRecord::Base
   after_create :operate
   
   def operate
-    p "Wheeee! Let's operate something"
+  
   end
   
 end

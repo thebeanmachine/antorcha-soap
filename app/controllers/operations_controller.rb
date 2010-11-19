@@ -40,6 +40,7 @@ class OperationsController < ApplicationController
   # POST /operations
   # POST /operations.xml
   def create
+    logger.info "*** Create an Operation ***"
     @operation = Operation.new(params[:operation])
 
     respond_to do |format|

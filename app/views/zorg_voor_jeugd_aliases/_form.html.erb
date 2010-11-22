@@ -1,11 +1,11 @@
 <% semantic_form_for(@zorg_voor_jeugd_alias) do |f| %>
   <%= f.error_messages %>
 
-  <% f.inputs "Gebruiker in Antorcha" do %>
+  <% f.inputs "Gebruiker binnen Antorcha" do %>
     <%= f.input :organization_id, :collection => Organization.all.collect {|x| [x.title, x.id]} %>
     <%= f.input :organization_username %>
   <% end %>
-  <% f.inputs "Gebruiker in Zorg voor Jeugd" do %>
+  <% f.inputs "Gebruiker binnen Zorg voor Jeugd" do %>
     <%= f.input :organisatie_uuid %>
     <%= f.input :organisatie_naam %>
     <%= f.input :organisatie_postcode %>

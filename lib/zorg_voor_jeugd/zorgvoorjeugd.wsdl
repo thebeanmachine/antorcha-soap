@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://zvj.interaccess.nl/signalering/" xmlns:common="http://zvj.interaccess.nl/common/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="SignaleringWebService" targetNamespace="http://zvj.interaccess.nl/signalering/">
+  <types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://zvj.interaccess.nl/common/">
+      <xsd:include schemaLocation="SignaleringWebService?xsd=WebserviceFault.xsd"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://zvj.interaccess.nl/signalering/">
+      <xsd:include schemaLocation="SignaleringWebService?xsd=SignaleringTypes.xsd"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://zvj.interaccess.nl/common/">
+      <xsd:include schemaLocation="SignaleringWebService?xsd=CommonTypes.xsd"/>
+    </xs:schema>
+  </types>
+  <message name="nieuweSignaleringResponse">
+    <part name="nieuweSignaleringResponse" element="tns:nieuweSignaleringResponse">
+    </part>
+  </message>
+  <message name="wijzigSignaleringResponse">
+    <part name="wijzigSignaleringResponse" element="tns:wijzigSignaleringResponse">
+    </part>
+  </message>
+  <message name="nieuweSignaleringRequest">
+    <part name="nieuweSignalering" element="tns:nieuweSignalering">
+    </part>
+  </message>
+  <message name="WebserviceException">
+    <part name="webserviceFault" element="common:webserviceFault">
+    </part>
+  </message>
+  <message name="wijzigSignaleringRequest">
+    <part name="wijzigSignalering" element="tns:wijzigSignalering">
+    </part>
+  </message>
+  <portType name="SignaleringWebServicePortType">
+    <operation name="nieuweSignalering">
+      <input message="tns:nieuweSignaleringRequest">
+    </input>
+      <output message="tns:nieuweSignaleringResponse">
+    </output>
+      <fault name="WebserviceException" message="tns:WebserviceException">
+    </fault>
+    </operation>
+    <operation name="wijzigSignalering">
+      <input message="tns:wijzigSignaleringRequest">
+    </input>
+      <output message="tns:wijzigSignaleringResponse">
+    </output>
+      <fault name="WebserviceException" message="tns:WebserviceException">
+    </fault>
+    </operation>
+  </portType>
+  <binding name="SignaleringSoapService" type="tns:SignaleringWebServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="nieuweSignalering">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="WebserviceException">
+        <soap:fault name="WebserviceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="wijzigSignalering">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="WebserviceException">
+        <soap:fault name="WebserviceException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="SignaleringWebService">
+    <port name="SignaleringWebServicePort" binding="tns:SignaleringSoapService">
+      <soap:address location="http://172.25.32.6:80/zvj-ws-v2/services/SignaleringWebService/"/>
+    </port>
+  </service>
+</definitions>

@@ -11,7 +11,7 @@ class Operation < ActiveRecord::Base
   
   def post_xml
     # This is a test ZVJ SOAP envelope! It's static but we will make it dynamic really really soon! Oh yeah btw: ...SOAP SUCKS :D
-    soap_data = <<-EOF
+    soap_data = <<-XML
       <?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sig="http://zvj.interaccess.nl/signalering/" xmlns:com="http://zvj.interaccess.nl/common/">
    <soapenv:Header/>
@@ -45,7 +45,7 @@ class Operation < ActiveRecord::Base
       </sig:nieuweSignalering>
    </soapenv:Body>
 </soapenv:Envelope>
-    EOF
+    XML
     
     # Set Headers
     headers = {

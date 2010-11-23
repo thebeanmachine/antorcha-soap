@@ -8,6 +8,8 @@ gem "fortify", "0.0.3"
 gem "delayed_job", "2.0.3"
 gem "less"
 
+gem "savon"
+
 # bundler requires these gems in all environments
 # gem "nokogiri", "1.4.2"
 # gem "geokit"

@@ -3,28 +3,29 @@ require 'soap/wsdlDriver'
 
 module ZorgVoorJeugd
   class Base
-    WSDL = 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService?wsdl'
+    # WSDL = 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService?wsdl'
 
     def self.create
-      driver.wiredump_dev = STDOUT
-      driver.endpoint_url = 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService/'
-      #driver.wiredump_file_base File.join( Rails.root, 'logs', 'soapresults.log')
-      param1 = XSD::QName.new(nil, "param1")
-      driver.nieuweSignalering({
-        "OrganisatieGebruiker" => {
-            "OrganisatieNAW" => {
-              "OrganisatieNaam" => 'smurfbalet', "OrganisatiePostcode" => '5432FG'
-            },
-            "GebruikernaamMedewerker" => 'brilsmurf'
-          },
+      client = Savon::Client.new 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService/'
+      client.nieuweSignalering! do |soap|
+        soap.namespace = 'http://zvj.interaccess.nl/signalering/'
 
-          "NieuwSignaal" => {
-            "SignaalType" => '1', "Einddatum" => Date.new
-          },
-          'VerifieerJongere' => "<BurgerServiceNummer>12323</BurgerServiceNummer>"
-  #          :BurgerServiceNummer => '12323'
-   #       }
-      })
+        soap.body = <<-XML
+          <wsdl:OrganisatieGebruiker xmlns:com="http://zvj.interaccess.nl/common/">
+            <com:OrganisatieNAW>
+              <com:OrganisatieNaam>Thorax</com:OrganisatieNaam>
+              <com:OrganisatiePostcode>3800AD</com:OrganisatiePostcode>
+            </com:OrganisatieNAW>
+            <com:GebruikernaamMedewerker>snagel</com:GebruikernaamMedewerker>
+          </wsdl:OrganisatieGebruiker>
+          <wsdl:VerifieerJongere xmlns:com="http://zvj.interaccess.nl/common/">
+            <com:BurgerServiceNummer>4234324324324</com:BurgerServiceNummer>
+          </wsdl:VerifieerJongere>
+          <wsdl:NieuwSignaal>
+            <wsdl:SignaalType>4</wsdl:SignaalType>
+          </wsdl:NieuwSignaal>
+        XML
+      end
     end
     
     def self.update

@@ -1,39 +1,78 @@
 
-require 'soap/wsdlDriver'
-
 module ZorgVoorJeugd
-  class Base
-    # WSDL = 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService?wsdl'
+  class Base < Struct.new(:params)
 
-    def self.create
+    def create jongere, signalering
       client = Savon::Client.new 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService/'
-      client.nieuweSignalering! do |soap|
+      result = client.nieuwe_signalering! do |soap|
         soap.namespace = 'http://zvj.interaccess.nl/signalering/'
 
-        soap.body = <<-XML
-          <wsdl:OrganisatieGebruiker xmlns:com="http://zvj.interaccess.nl/common/">
-            <com:OrganisatieNAW>
-              <com:OrganisatieNaam>Thorax</com:OrganisatieNaam>
-              <com:OrganisatiePostcode>3800AD</com:OrganisatiePostcode>
-            </com:OrganisatieNAW>
-            <com:GebruikernaamMedewerker>snagel</com:GebruikernaamMedewerker>
-          </wsdl:OrganisatieGebruiker>
-          <wsdl:VerifieerJongere xmlns:com="http://zvj.interaccess.nl/common/">
-            <com:BurgerServiceNummer>4234324324324</com:BurgerServiceNummer>
-          </wsdl:VerifieerJongere>
-          <wsdl:NieuwSignaal>
-            <wsdl:SignaalType>4</wsdl:SignaalType>
-          </wsdl:NieuwSignaal>
-        XML
+        xml = Builder::XmlMarkup.new :indent => 2
+        
+        xml.wsdl :OrganisatieGebruiker, 'xmlns:com' => "http://zvj.interaccess.nl/common/" do
+          if params[:uuid]
+            xml.com :OrganisatieUUID, params[:uuid]
+          else
+            xml.com :OrganisatieNAW do
+              xml.com :OrganisatieNaam, params[:naam]
+              xml.com :OrganisatiePostcode, params[:postcode]
+            end
+          end
+          xml.com :GebruikernaamMedewerker, params[:username]
+        end
+        xml.wsdl :VerifieerJongere, 'xmlns:com' => "http://zvj.interaccess.nl/common/" do
+          if jongere[:bsn]
+            xml.com :BurgerServiceNummer, jongere[:bsn]
+          else
+            # En wat nu als het een tweeling is die elkaar het leven zuur maken? FAIL!
+            xml.com :Jongere do
+              xml.com :Achternaam, jongere[:achternaam]
+              xml.com :Geboortedatum, jongere[:geboortedatum]
+              xml.com :Geslacht, jongere[:geslacht]
+              xml.com :Postcode, jongere[:postcode]
+              xml.com :Huisnummer, jongere[:huisnummer]
+            end
+          end
+        end
+        xml.wsdl :NieuwSignaal do
+          xml.wsdl :SignaalType, signalering
+        end
+
+        soap.body = xml.target!
+      end
+      
+      unless result.soap_fault? or result.http_error?
+        hash = result.to_hash
+        Response.new(hash[:nieuwe_signalering_response])
+      else
+        raise result.soap_fault if result.soap_fault?
+        raise result.http_error if result.http_error?
       end
     end
     
-    def self.update
+    def update
     end
     
-  private
-    def self.driver
-      @driver ||= SOAP::WSDLDriverFactory.new(WSDL).create_rpc_driver
+  end
+  
+  class Response < Struct.new(:response)
+    
+    def status_code
+      response[:status_code]
+    end
+    
+    def status_omschrijving
+      response[:status_omschrijving]
+    end  
+    
+    def success?
+      status_code == '0'
+    end
+    def warning?
+      status_code =~ /^(2|27|39)$/
+    end
+    def failure?
+      not (success? || warning?)
     end
   end
 end

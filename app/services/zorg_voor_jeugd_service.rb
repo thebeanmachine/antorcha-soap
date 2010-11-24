@@ -16,7 +16,7 @@ class ZorgVoorJeugdService
   
   def nieuwe_signalering
     signalering = ZorgVoorJeugd::Base.new organisatie_naw
-    response = signalering.create body[:jongere], body[:signaaltype]
+    response = signalering.create self.body
     
     if response.success?
       puts "geweldig het heeft gewerkt."

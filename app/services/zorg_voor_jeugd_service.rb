@@ -6,7 +6,7 @@ class ZorgVoorJeugdService
   end
 
   def body
-    @body.symbolize_keys
+    @body.symbolize_keys!
     @body[:hash]
   end
   

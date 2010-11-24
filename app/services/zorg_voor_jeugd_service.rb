@@ -1,9 +1,12 @@
 class ZorgVoorJeugdService < ActionAntorcha::Base
   
+  def organisatie_naw
+    {:naam => 'Thorax', :postcode => '3800AD', :username => 'thebeanmachine'}
+  end 
   
   def nieuwe_signalering
-    signalering = ZorgVoorJeugd.new :postcode => '3800AD', :naam => 'Thorax', :username => 'thebeanmachine'
-    response = signalering.create params[:jongere], params[:signalering]
+    signalering = ZorgVoorJeugd::Base.new organisatie_naw
+    response = signalering.create body[:jongere], body[:signaaltype]
     
     if response.success?
       puts "geweldig het heeft gewerkt."

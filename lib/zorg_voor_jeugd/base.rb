@@ -1,8 +1,8 @@
 
 module ZorgVoorJeugd
-  class Base < Struct.new(:params)
+  class Base < Struct.new(:organisatie_naw)
 
-    def create jongere, signalering
+    def create signalering
       client = Savon::Client.new 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService/'
       result = client.nieuwe_signalering! do |soap|
         soap.namespace = 'http://zvj.interaccess.nl/signalering/'
@@ -10,32 +10,33 @@ module ZorgVoorJeugd
         xml = Builder::XmlMarkup.new :indent => 2
         
         xml.wsdl :OrganisatieGebruiker, 'xmlns:com' => "http://zvj.interaccess.nl/common/" do
-          if params[:uuid]
-            xml.com :OrganisatieUUID, params[:uuid]
+          if organisatie_naw[:uuid]
+            xml.com :OrganisatieUUID, organisatie_naw[:uuid]
           else
             xml.com :OrganisatieNAW do
-              xml.com :OrganisatieNaam, params[:naam]
-              xml.com :OrganisatiePostcode, params[:postcode]
+              xml.com :OrganisatieNaam, organisatie_naw[:naam]
+              xml.com :OrganisatiePostcode, organisatie_naw[:postcode]
             end
           end
-          xml.com :GebruikernaamMedewerker, params[:username]
+          xml.com :GebruikernaamMedewerker, organisatie_naw[:username]
         end
         xml.wsdl :VerifieerJongere, 'xmlns:com' => "http://zvj.interaccess.nl/common/" do
-          if jongere[:bsn]
-            xml.com :BurgerServiceNummer, jongere[:bsn]
+          if signalering[:bsn]
+            xml.com :BurgerServiceNummer, signalering[:bsn]
           else
             # En wat nu als het een tweeling is die elkaar het leven zuur maken? FAIL!
             xml.com :Jongere do
-              xml.com :Achternaam, jongere[:achternaam]
-              xml.com :Geboortedatum, jongere[:geboortedatum]
-              xml.com :Geslacht, jongere[:geslacht]
-              xml.com :Postcode, jongere[:postcode]
-              xml.com :Huisnummer, jongere[:huisnummer]
+              xml.com :Achternaam, signalering[:achternaam]
+              xml.com :Geboortedatum, signalering[:geboortedatum]
+              xml.com :Geslacht, signalering[:geslacht]
+              xml.com :Postcode, signalering[:postcode]
+              xml.com :Huisnummer, signalering[:huisnummer]
             end
           end
         end
         xml.wsdl :NieuwSignaal do
-          xml.wsdl :SignaalType, signalering
+          xml.wsdl :SignaalType, signalering[:signaaltype]
+          xml.wsdl :Einddatum, signalering[:einddatum]
         end
 
         soap.body = xml.target!

@@ -10,29 +10,29 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     
     if response.success?
       reply :antwoordbericht_nieuwe_signalering do |msg|
-        msg.title = "Gesignaleerd"
-        msg.body = { :nieuwe_signalering => {
+        title "Gesignaleerd"
+        body :nieuwe_signalering => {
           :status_code => response.status_code,
-          :omschrijving => response.omschrijving
-        } }
+          :omschrijving => response.status_omschrijving
+        }
       end
     elsif response.warning?
       reply :antwoordbericht_nieuwe_signalering do |msg|
-        msg.title = "Gesignaleerd, echter met een waarschuwing"
-        msg.body = { :nieuwe_signalering => {
+        title "Gesignaleerd, echter met een waarschuwing"
+        body :nieuwe_signalering => {
           :status_code => response.status_code,
-          :omschrijving => response.omschrijving,
+          :omschrijving => response.status_omschrijving,
           :waarschuwing => true
-        } }
+        }
       end
     else
       reply :antwoordbericht_nieuwe_signalering do |msg|
-        msg.title = "Signalering mislukt"
-        msg.body = { :nieuwe_signalering => {
+        title "Signalering mislukt"
+        body :nieuwe_signalering => {
           :status_code => response.status_code,
-          :omschrijving => response.omschrijving,
+          :omschrijving => response.status_omschrijving,
           :failure => true
-        } }
+        }
       end
     end
   end

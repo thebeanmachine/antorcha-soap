@@ -15,6 +15,10 @@ module ActionAntorcha
       @body[:hash]
     end
     
+    def message
+      @message
+    end
+    
     include ReplyOnMessage
   end
 end

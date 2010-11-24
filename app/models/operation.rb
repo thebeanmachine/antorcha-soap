@@ -9,7 +9,7 @@ class Operation < ActiveRecord::Base
   after_create :enqueue_dispatch
 
   def enqueue_dispatch
-    Delayed::Job.enqueue DispatchService.new(id)
+    Delayed::Job.enqueue Jobs::DispatchOperationJob.new(id)
   end
   
   def dispatch
@@ -17,7 +17,7 @@ class Operation < ActiveRecord::Base
     
     routes = MessageRouting.draw do
       connect :zorg_voor_jeugd, :nieuwe_signalering do |m|
-        message.body =~ /nieuweSignalering/
+        message.body =~ /signaaltype/
       end
     end
 

@@ -6,7 +6,7 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
   
   def nieuwe_signalering
     signalering = ZorgVoorJeugd::Base.new organisatie_naw
-    response = signalering.create body[:jongere], body[:signaaltype]
+    response = signalering.create body #[:jongere], body[:signaaltype]
     
     if response.success?
       reply :antwoordbericht_nieuwe_signalering do |msg|

@@ -10,8 +10,8 @@ module MessageRouting
     end
     
     def match message
-      @routes.each do |route|
-        return route if route.match? message
+      @routes.detect do |route|
+        route.match? message
       end
     end
   end

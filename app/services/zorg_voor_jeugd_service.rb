@@ -1,14 +1,4 @@
-class ZorgVoorJeugdService
-  
-  def initialize message
-    @message = message
-    @body = Hash.from_xml message.body
-  end
-
-  def body
-    @body.symbolize_keys!
-    @body[:hash]
-  end
+class ZorgVoorJeugdService < ActionAntorcha::Base
   
   def organisatie_naw
     {:naam => 'Thorax', :postcode => '3800AD', :username => 'thebeanmachine'}
@@ -16,28 +6,35 @@ class ZorgVoorJeugdService
   
   def nieuwe_signalering
     signalering = ZorgVoorJeugd::Base.new organisatie_naw
-    response = signalering.create self.body
+    response = signalering.create body #[:jongere], body[:signaaltype]
     
     if response.success?
-      puts "geweldig het heeft gewerkt."
-      reply :gesignaleerd do |msg|
-        msg.title = "gesignaleerd!"
-        msg.body = response
+      reply :antwoordbericht_nieuwe_signalering do |msg|
+        title "Gesignaleerd"
+        body :nieuwe_signalering => {
+          :status_code => response.status_code,
+          :omschrijving => response.status_omschrijving
+        }
       end
     elsif response.warning?
-      puts "het werkte wel maar het ging niet helemaal goed"
-      reply :gesignaleerd_maar do |msg|
-        msg.title = "gesignaleerd met een waarschuwing"
-        msg.body = "<error><status_code></"
+      reply :antwoordbericht_nieuwe_signalering do |msg|
+        title "Gesignaleerd, echter met een waarschuwing"
+        body :nieuwe_signalering => {
+          :status_code => response.status_code,
+          :omschrijving => response.status_omschrijving,
+          :waarschuwing => true
+        }
       end
     else
-      puts "dikke failure stuur een failure bericht"
-      reply :dikke_vette_pech_stap do |msg|
-        msg.title = 
-        msg.body = "<error><status_code></"
+      reply :antwoordbericht_nieuwe_signalering do |msg|
+        title "Signalering mislukt"
+        body :nieuwe_signalering => {
+          :status_code => response.status_code,
+          :omschrijving => response.status_omschrijving,
+          :failure => true
+        }
       end
     end
-
   end
   
   def wijzig_signalering

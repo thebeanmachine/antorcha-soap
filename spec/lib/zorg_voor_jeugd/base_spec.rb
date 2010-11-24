@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe ZorgVoorJeugd::Base do
 
+  def organisatie_naw
+    {:naam => 'Thorax', :postcode => '3800AD', :username => 'thebeanmachine'}
+  end
+  
   def marylin_monroe
     {
       :achternaam => 'Monroe',
@@ -11,10 +15,10 @@ describe ZorgVoorJeugd::Base do
       :huisnummer => '6'
     }
     #  	Marylin	73961486	N.J.M.	 VROUW	01-06-1996		Rokkenplein	6		5754	DE	Deurne
-  end
+  end  
 
   describe "for hulpverlener thebeanmachine" do
-    subject { ZorgVoorJeugd::Base.new :naam => 'Thorax', :postcode => '3800AD', :username => 'thebeanmachine' }
+    subject { ZorgVoorJeugd::Base.new  organisatie_naw}
 
     describe "create" do
       it "should create a signalering based on a bsn" do

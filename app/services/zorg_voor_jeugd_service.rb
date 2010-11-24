@@ -6,7 +6,8 @@ class ZorgVoorJeugdService
   end
 
   def body
-    @body["hash"]
+    @body.symbolize_keys
+    @body[:hash]
   end
   
   def organisatie_naw
@@ -15,7 +16,7 @@ class ZorgVoorJeugdService
   
   def nieuwe_signalering
     signalering = ZorgVoorJeugd::Base.new organisatie_naw
-    response = signalering.create body["jongere"], body["signaaltype"]
+    response = signalering.create body[:jongere], body[:signaaltype]
     
     if response.success?
       puts "geweldig het heeft gewerkt."

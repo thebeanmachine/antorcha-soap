@@ -4,7 +4,9 @@ module ActionAntorcha
       step = find_step(step_symbol)
       raise "Step kan niet geselecteerd worden." unless step
       
-      reply = Reply.new message, step
+      puts step.inspect
+      
+      reply = Reply.new message, step.first
       reply.instance_exec(&block)
       
       reply.deliver
@@ -16,7 +18,7 @@ module ActionAntorcha
     end
     
     def step_name_from_symbol step_symbol
-      step_symbol.to_s.sub('_','-')
+      step_symbol.to_s.gsub('_','-')
     end
   end
   

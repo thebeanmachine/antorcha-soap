@@ -9,7 +9,7 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     response = signalering.create body[:jongere], body[:signaaltype]
     
     if response.success?
-      reply :gesignaleerd do |msg|
+      reply :antwoordbericht_nieuwe_signalering do |msg|
         msg.title = "Gesignaleerd"
         msg.body = { :nieuwe_signalering => {
           :status_code => response.status_code,
@@ -17,7 +17,7 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
         } }
       end
     elsif response.warning?
-      reply :gesignaleerd_maar do |msg|
+      reply :antwoordbericht_nieuwe_signalering do |msg|
         msg.title = "Gesignaleerd, echter met een waarschuwing"
         msg.body = { :nieuwe_signalering => {
           :status_code => response.status_code,
@@ -26,7 +26,7 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
         } }
       end
     else
-      reply :dikke_vette_pech_stap do |msg|
+      reply :antwoordbericht_nieuwe_signalering do |msg|
         msg.title = "Signalering mislukt"
         msg.body = { :nieuwe_signalering => {
           :status_code => response.status_code,

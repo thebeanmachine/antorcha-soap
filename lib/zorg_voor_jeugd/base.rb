@@ -2,7 +2,7 @@
 module ZorgVoorJeugd
   class Base < Struct.new(:organisatie_naw)
 
-    def create jongere, signaaltype
+    def create signalering
       client = Savon::Client.new 'http://zvjtest.interaccess.nl/zvj-ws-v2/services/SignaleringWebService/'
       result = client.nieuwe_signalering! do |soap|
         soap.namespace = 'http://zvj.interaccess.nl/signalering/'
@@ -21,21 +21,22 @@ module ZorgVoorJeugd
           xml.com :GebruikernaamMedewerker, organisatie_naw[:username]
         end
         xml.wsdl :VerifieerJongere, 'xmlns:com' => "http://zvj.interaccess.nl/common/" do
-          if jongere[:bsn]
-            xml.com :BurgerServiceNummer, jongere[:bsn]
+          if signalering[:bsn]
+            xml.com :BurgerServiceNummer, signalering[:bsn]
           else
             # En wat nu als het een tweeling is die elkaar het leven zuur maken? FAIL!
             xml.com :Jongere do
-              xml.com :Achternaam, jongere[:achternaam]
-              xml.com :Geboortedatum, jongere[:geboortedatum]
-              xml.com :Geslacht, jongere[:geslacht]
-              xml.com :Postcode, jongere[:postcode]
-              xml.com :Huisnummer, jongere[:huisnummer]
+              xml.com :Achternaam, signalering[:achternaam]
+              xml.com :Geboortedatum, signalering[:geboortedatum]
+              xml.com :Geslacht, signalering[:geslacht]
+              xml.com :Postcode, signalering[:postcode]
+              xml.com :Huisnummer, signalering[:huisnummer]
             end
           end
         end
         xml.wsdl :NieuwSignaal do
-          xml.wsdl :SignaalType, signaaltype
+          xml.wsdl :SignaalType, signalering[:signaaltype]
+          xml.wsdl :Einddatum, signalering[:einddatum]
         end
 
         soap.body = xml.target!

@@ -1,13 +1,5 @@
-class ZorgVoorJeugdService
+class ZorgVoorJeugdService < ActionAntorcha::Base
   
-  def initialize message
-    @message = message
-    @params = Hash.from_xml message.body
-  end
-
-  def params
-    @params
-  end
   
   def nieuwe_signalering
     signalering = ZorgVoorJeugd.new :postcode => '3800AD', :naam => 'Thorax', :username => 'thebeanmachine'

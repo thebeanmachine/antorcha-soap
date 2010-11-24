@@ -3,7 +3,7 @@
 module AntorchaHelper
   
   %w[
-    antorcha message
+    antorcha message step
   ].each do |model|
     self.class_eval <<-RUBY
       def mock_#{model} name = :default

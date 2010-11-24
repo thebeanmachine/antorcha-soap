@@ -9,25 +9,32 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     response = signalering.create body[:jongere], body[:signaaltype]
     
     if response.success?
-      puts "geweldig het heeft gewerkt."
       reply :gesignaleerd do |msg|
-        msg.title = "gesignaleerd!"
-        msg.body = response
+        msg.title = "Gesignaleerd"
+        msg.body = { :nieuwe_signalering => {
+          :status_code => response.status_code,
+          :omschrijving => response.omschrijving
+        } }
       end
     elsif response.warning?
-      puts "het werkte wel maar het ging niet helemaal goed"
       reply :gesignaleerd_maar do |msg|
-        msg.title = "gesignaleerd met een waarschuwing"
-        msg.body = "<error><status_code></"
+        msg.title = "Gesignaleerd, echter met een waarschuwing"
+        msg.body = { :nieuwe_signalering => {
+          :status_code => response.status_code,
+          :omschrijving => response.omschrijving,
+          :waarschuwing => true
+        } }
       end
     else
-      puts "dikke failure stuur een failure bericht"
       reply :dikke_vette_pech_stap do |msg|
-        msg.title = 
-        msg.body = "<error><status_code></"
+        msg.title = "Signalering mislukt"
+        msg.body = { :nieuwe_signalering => {
+          :status_code => response.status_code,
+          :omschrijving => response.omschrijving,
+          :failure => true
+        } }
       end
     end
-
   end
   
   def wijzig_signalering

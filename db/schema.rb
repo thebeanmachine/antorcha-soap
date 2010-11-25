@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101111142334) do
+ActiveRecord::Schema.define(:version => 20101122131837) do
 
   create_table "antorchas", :force => true do |t|
     t.string   "url"
@@ -39,5 +39,16 @@ ActiveRecord::Schema.define(:version => 20101111142334) do
   end
 
   add_index "operations", ["message_id"], :name => "index_operations_on_message_id", :unique => true
+
+  create_table "zorg_voor_jeugd_aliases", :force => true do |t|
+    t.integer  "organization_id",           :null => false
+    t.string   "organization_username",     :null => false
+    t.string   "organisatie_naam"
+    t.string   "organisatie_postcode"
+    t.string   "organisatie_uuid"
+    t.string   "gebruikersnaam_medewerker", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

@@ -46,6 +46,8 @@ nl:
   formtastic:
     labels:
       organization_ids: Filter op betrokken organisaties
+      organization_id: Organisatie
+      organization_username: Gebruikersnaam
     hints:
       step:
         destination_url: Bijvoorbeeld http://example.com/messages
@@ -74,6 +76,9 @@ nl:
       
   activerecord:
     models:
+      zorg_voor_jeugd_alias:
+        one: Alias
+        other: Aliassen
       definition:
         one: Transactiedefinitie
         other: Transactiedefinities
@@ -161,9 +166,12 @@ nl:
         title: Titel
         url: Bestemming
         roles: Rollen
+        username: Gebruikersnaam
       identity:
         organization: Organisatie
         private_key: Privésleutel
+      zorg_voor_jeugd_alias:
+        organization_username: Gebruikersnaam
 
   nl:
     errors:

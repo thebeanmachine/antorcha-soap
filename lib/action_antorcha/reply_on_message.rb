@@ -9,6 +9,7 @@ module ActionAntorcha
       reply = Reply.new message, step.first
       reply.instance_exec(&block)
       
+      reply.create_message
       reply.deliver
     end
     
@@ -30,12 +31,15 @@ module ActionAntorcha
       @body = body
     end
     
-    def deliver
+    def create_message
       @message = Message.create \
         :request_id => request.id, :step_id => step.id,
         :title => @title.to_s, :body => xml_serialized_body
-
-      @message.valid?
+    end
+    
+    def deliver
+      #@message.deliver
+      url_for Antorcha.url/messages/@message.id/deliveries
     end
     
     def xml_serialized_body

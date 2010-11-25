@@ -8,7 +8,7 @@ describe OperationsController do
 
   describe "GET index" do
     it "assigns all operations as @operations" do
-      Operation.stub(:find).with(:all).and_return([mock_operation])
+      Operation.stub(:find).with(:all, :order=>"updated_at desc", :limit=>100).and_return([mock_operation])
       get :index
       assigns[:operations].should == [mock_operation]
     end

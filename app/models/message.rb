@@ -8,6 +8,8 @@ class Message < ActiveResource::Base
   end
   
   def deliver
-    Delivery.create :message_id => id
+    @delivery = Delivery.create :message_id => id
+    raise "Bericht kon niet verstuurd worden: #{@delivery.errors.full_messages}" unless @delivery.valid?
+    true
   end
 end

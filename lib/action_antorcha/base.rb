@@ -5,7 +5,7 @@ module ActionAntorcha
     def initialize message
       @message = message
       @params = Hash.from_xml message.body
-      @body = Hash.from_xml message.body
+      @body = @params
     end
 
     def params
@@ -18,6 +18,14 @@ module ActionAntorcha
     
     def message
       @message
+    end
+    
+    def username
+      @message.username
+    end
+    
+    def organization_id
+      @message.organization_id
     end
   end
 end

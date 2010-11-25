@@ -1,7 +1,8 @@
 class ZorgVoorJeugdService < ActionAntorcha::Base
   
   def organisatie_naw
-    {:naam => 'Thorax', :postcode => '3800AD', :username => 'thebeanmachine'}
+    lookup = ZorgVoorJeugdAlias.lookup_alias(organization_id, username)
+    lookup.organisatie_as_hash if lookup
   end 
    
   def nieuwe_signalering

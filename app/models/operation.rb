@@ -2,9 +2,6 @@ class Operation < ActiveRecord::Base
   include CatchUniqueConstraintViolation
 
   validates_uniqueness_of :message_id
-  
-  #after_create :post_xml  
-  #after_update :put_xml
    
   after_create :enqueue_dispatch
 
@@ -17,7 +14,7 @@ class Operation < ActiveRecord::Base
     
     routes = MessageRouting.draw do
       connect :zorg_voor_jeugd, :nieuwe_signalering do |m|
-        message.body =~ /signaaltype/
+        Hash.from_xml(message.body).has_key? 'nieuwe_signalering'
       end
     end
 

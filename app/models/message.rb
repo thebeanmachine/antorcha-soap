@@ -6,4 +6,8 @@ class Message < ActiveResource::Base
   def effect_step_by_name name
     Step.find_effect_step_for_message_by_name self, name
   end
+  
+  def deliver
+    Delivery.create :message_id => id
+  end
 end

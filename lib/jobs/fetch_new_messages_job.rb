@@ -1,6 +1,6 @@
 class Jobs::FetchNewMessagesJob
   def perform
-    @messages = Message.all
+    @messages = Message.find(:all, :params=>{:search=>{:unexpired=>"true", :unread=>"true", :inbox=>"true", :notcancelled=>"true"}})
     receive
   end
   

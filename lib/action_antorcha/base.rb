@@ -5,15 +5,10 @@ module ActionAntorcha
     def initialize message
       @message = message
       @params = Hash.from_xml message.body
-      @body = @params
     end
 
     def params
       @params
-    end
-
-    def body
-      @body["hash"].symbolize_keys!
     end
     
     def message

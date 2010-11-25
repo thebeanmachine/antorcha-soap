@@ -1,4 +1,3 @@
-
 module ZorgVoorJeugd
   class Base < Struct.new(:organisatie_naw)
 
@@ -70,7 +69,7 @@ module ZorgVoorJeugd
       status_code == '0'
     end
     def warning?
-      status_code =~ /^(2|27|39)$/
+      !/^(2|27|39)$/.match(status_code).nil?
     end
     def failure?
       not (success? || warning?)

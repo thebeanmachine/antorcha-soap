@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ZorgVoorJeugdService do
  
   def organisatie_naw # *
-   {:naam => 'Thorax', :postcode => '3800AD', :username => 'thebeanmachine'}
+   {:naam => 'Thorax', :postcode => '3800AD', :username => 'snagel'}
   end
   
   def message_body

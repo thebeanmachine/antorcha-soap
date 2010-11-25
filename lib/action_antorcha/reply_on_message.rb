@@ -38,8 +38,7 @@ module ActionAntorcha
     end
     
     def deliver
-      #@message.deliver
-      url_for Antorcha.url/messages/@message.id/deliveries
+      @message.deliver
     end
     
     def xml_serialized_body

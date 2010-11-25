@@ -4,12 +4,9 @@ module ActionAntorcha
       step = find_step(step_symbol)
       raise "Step kan niet geselecteerd worden." unless step
       
-      puts step.inspect
-      
       reply = Reply.new message, step.first
       reply.instance_exec(&block)
       
-      reply.create_message
       reply.deliver
     end
     
@@ -31,15 +28,16 @@ module ActionAntorcha
       @body = body
     end
     
-    def create_message
+    def deliver
       @message = Message.create \
         :request_id => request.id, :step_id => step.id,
         :title => @title.to_s, :body => xml_serialized_body
-    end
-    
-    def deliver
-      #@message.deliver
-      url_for Antorcha.url/messages/@message.id/deliveries
+        
+      if @message.valid?
+        @message.deliver
+      else
+        raise "Message creation failed: #{@message.errors.full_messages}"
+      end
     end
     
     def xml_serialized_body

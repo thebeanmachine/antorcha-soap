@@ -14,7 +14,6 @@ describe ActionAntorcha::ReplyOnMessage do
   before(:each) do
     mock_message(:request).stub :effect_step_by_name => mock_step
     Message.stub :create => mock_message(:reply)
-    mock_message(:reply).stub :valid? => true
     mock_step.stub :first => mock_step
   end
   
@@ -33,7 +32,7 @@ describe ActionAntorcha::ReplyOnMessage do
       body "lichaam"
     end
   end
-
+  
   it "passes request_id to message#create" do
     Message.should_receive(:create).with(hash_including(:request_id => mock_message(:request).id))
     
@@ -42,7 +41,7 @@ describe ActionAntorcha::ReplyOnMessage do
       body "lichaam"
     end
   end
-  
+
   it "passes step_id to message#create" do
     Message.should_receive(:create).with(hash_including(:step_id => mock_step.id))
     
@@ -51,7 +50,7 @@ describe ActionAntorcha::ReplyOnMessage do
       body "lichaam"
     end
   end
-  
+
   it "passes successful status of the message validity as return value" do
     result = subject.reply :signaleer_iets do
       title "titel"
@@ -60,8 +59,7 @@ describe ActionAntorcha::ReplyOnMessage do
     
     result.should be_true
   end
-  
-
+ 
   it "passes failure status of the message validity as return value" do
     mock_message(:reply).stub :valid? => false
     result = subject.reply :signaleer_iets do

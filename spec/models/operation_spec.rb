@@ -7,7 +7,7 @@ describe Operation do
     }
     
     Message.stub :find => mock_message
-    mock_message.stub :body => 'nieuweSignalering'
+    
   end
 
   it "should create a new instance given valid attributes" do
@@ -27,9 +27,20 @@ describe Operation do
     o.errors.on(:message_id).should =~ /reeds in gebruik/
   end
   
-  it "can dispatch?" do
-    Operation.create!(@valid_attributes).dispatch
+  describe "dispatch" do
+    it "dispatches nieuwe_signalering" do
+      mock_message.stub :body => '<nieuwe-signalering></nieuwe-signalering>'
+      mock_service = mock(ZorgVoorJeugdService)
+      ZorgVoorJeugdService.stub :new => mock_service
+      mock_service.should_receive(:nieuwe_signalering).and_return('squat')
+      Operation.create!(@valid_attributes).dispatch
+    end
+    
+    it "does not dispatch unknown message" do
+      mock_message.stub :body => '<knippie-knaus></knippie-knaus>', :title => 'whoeps'
+      
+      lambda { Operation.create!(@valid_attributes).dispatch }.should raise_error(/No route matched this message: whoeps/)
+    end
   end
-
 
 end

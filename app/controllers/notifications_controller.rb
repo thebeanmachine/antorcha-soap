@@ -1,7 +1,6 @@
 class NotificationsController < ApplicationController
   
-  protect_from_forgery :except => :create
-
+  skip_before_filter :verify_authenticity_token
   
   def create
     logger.info("*** PSSSSSST!! :) ***")

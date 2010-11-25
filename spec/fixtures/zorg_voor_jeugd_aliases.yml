@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  organization_id: 1
+  organization_username: MyString
+  gebruikersnaam_medewerker: MyString
+  organisatie_naam: MyString
+  organisatie_postcode: MyString
+  organisatie_uuid: MyString
+
+two:
+  organization_id: 1
+  organization_username: MyString
+  gebruikersnaam_medewerker: MyString
+  organisatie_naam: MyString
+  organisatie_postcode: MyString
+  organisatie_uuid: MyString

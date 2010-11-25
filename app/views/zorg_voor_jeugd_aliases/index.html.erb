@@ -1,0 +1,27 @@
+<h1>Overzicht Zorg voor Jeugd aliasen</h1>
+
+<p><%= link_to 'Nieuwe Zorg voor Jeugd alias', new_zorg_voor_jeugd_alias_path %></p>
+
+<table>
+  <tr>
+    <th>Antorcha</th>
+    <th>Zorg voor Jeugd</th>
+  </tr>
+
+<% @zorg_voor_jeugd_aliases.each do |zorg_voor_jeugd_alias| %>
+  <tr>
+    <td>
+      <% link_to zorg_voor_jeugd_alias_path(zorg_voor_jeugd_alias) do %>
+        <%= antorcha_aanduiding(zorg_voor_jeugd_alias) %>
+      <% end %>
+    </td>
+    <td>
+      <% link_to zorg_voor_jeugd_alias_path(zorg_voor_jeugd_alias) do %>
+        <%=h zorg_voor_jeugd_aanduiding(zorg_voor_jeugd_alias) %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+

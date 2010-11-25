@@ -14,6 +14,7 @@ describe ActionAntorcha::ReplyOnMessage do
   before(:each) do
     mock_message(:request).stub :effect_step_by_name => mock_step
     Message.stub :create => mock_message(:reply)
+    mock_message(:reply).stub :valid? => true, :deliver => true
     mock_step.stub :first => mock_step
   end
   
@@ -68,6 +69,12 @@ describe ActionAntorcha::ReplyOnMessage do
     end
     
     result.should be_false
+  end
+  
+  it "serializes the hash correctly" do
+    @reply = ActionAntorcha::Reply.new
+    @reply.body :aap => { :noot => 'mies'}
+    @reply.xml_serialized_body.should == "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<aap>\n  <noot>mies</noot>\n</aap>\n"
   end
   
 end

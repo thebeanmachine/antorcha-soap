@@ -42,7 +42,12 @@ module ActionAntorcha
     
     def xml_serialized_body
       if @body.respond_to?(:to_xml)
-        @body.to_xml
+        if @body.kind_of?(Hash)
+          root = @body.keys.first
+          @body[root].to_xml :root => root
+        else
+          @body.to_xml
+        end
       else
         @body
       end

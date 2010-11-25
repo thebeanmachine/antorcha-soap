@@ -15,6 +15,7 @@ describe ActionAntorcha::ReplyOnMessage do
     mock_message(:request).stub :effect_step_by_name => mock_step
     Message.stub :create => mock_message(:reply)
     mock_message(:reply).stub :valid? => true
+    mock_step.stub :first => mock_step
   end
   
   it "should be able to reply" do

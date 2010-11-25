@@ -2,7 +2,7 @@ class OperationsController < ApplicationController
   # GET /operations
   # GET /operations.xml
   def index
-    @operations = Operation.all
+    @operations = Operation.find(:all, :order=>"updated_at desc", :limit=>100)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -59,7 +59,8 @@ require 'spec_helper'
           end
           
           it "should raise an error about a wrong date" do
-            lambda { subject.create required_fields.merge(:einddatum => "12-12-2012")}.should raise_error
+            result = subject.create required_fields.merge(:einddatum => "12-21-2012")
+            result.response[:status_code].should == 99
           end
         end
   
@@ -68,8 +69,9 @@ require 'spec_helper'
       context "with invalid 'organisatie_naw'" do
         subject { ZorgVoorJeugd::Base.new :naam => 'Foo', :postcode => '0000AA', :username => 'foo-user' }
         
-        it "should raise some error" do
-          lambda { subject.create jongere_naw_required_fields.merge(signaaltype) }.should raise_error
+        it "should raise status code 99" do
+          result =  subject.create required_fields
+          result.response[:status_code].should == 99
         end
       end
     end

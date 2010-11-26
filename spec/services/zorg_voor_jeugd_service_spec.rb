@@ -14,7 +14,7 @@ describe ZorgVoorJeugdService do
     mock_message.stub \
      :body => message_body, :organization_id => "1", :username => "henk"
     ZorgVoorJeugdService.new mock_message
-  } 
+  }  
    
   describe "nieuwe signalering" do
    
@@ -22,6 +22,8 @@ describe ZorgVoorJeugdService do
     
     response = mock(ZorgVoorJeugd::Response)
     response.stub(:success?).and_return(true)
+    response.stub(:warning?).and_return(false)
+    response.stub(:failure?).and_return(false)
     
     response.stub :status_code => 99, :status_omschrijving => 'Whoeps', :signaal_uuid => '97523'
     
@@ -41,6 +43,8 @@ describe ZorgVoorJeugdService do
      r.title.should == "Gesignaleerd"
      r.step_symbol.should == :antwoordbericht_nieuwe_signalering
      r.body[:nieuwe_signalering][:status_code].should == 99
+     r.body[:nieuwe_signalering][:waarschuwing].should == false
+     r.body[:nieuwe_signalering][:failure].should == false
     end
     
    end
@@ -49,9 +53,10 @@ describe ZorgVoorJeugdService do
     
     response = mock(ZorgVoorJeugd::Response)
    
-   response.stub(:success?).and_return(false)
+    response.stub(:success?).and_return(false)
     response.stub(:warning?).and_return(true)
-    
+    response.stub(:failure?).and_return(false)
+  
     response.stub :status_code => 39, :status_omschrijving => 'Whoeps', :signaal_uuid => '97523'
     
     signalering = mock(ZorgVoorJeugd::Base)
@@ -70,6 +75,7 @@ describe ZorgVoorJeugdService do
      r.title.should == "Gesignaleerd, echter met een waarschuwing"
      r.step_symbol.should == :antwoordbericht_nieuwe_signalering
      r.body[:nieuwe_signalering][:waarschuwing].should == true
+     r.body[:nieuwe_signalering][:failure].should == false
     end
     
    end
@@ -78,10 +84,11 @@ describe ZorgVoorJeugdService do
     
     response = mock(ZorgVoorJeugd::Response)
    
-   response.stub(:success?).and_return(false)
+    response.stub(:success?).and_return(false)
     response.stub(:warning?).and_return(false)
+    response.stub(:failure?).and_return(true)
     
-    response.stub :status_code => 99, :status_omschrijving => 'Whoeps'
+    response.stub :status_code => 99, :status_omschrijving => 'Whoeps', :signaal_uuid => nil
     
     signalering = mock(ZorgVoorJeugd::Base)
     signalering.stub :create => response
@@ -93,6 +100,7 @@ describe ZorgVoorJeugdService do
     subject.replies.each do |r|
      r.title.should == "Signalering mislukt"
      r.step_symbol.should == :antwoordbericht_nieuwe_signalering
+     r.body[:nieuwe_signalering][:waarschuwing].should == false
      r.body[:nieuwe_signalering][:failure].should == true
     end
     

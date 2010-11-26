@@ -1,7 +1,7 @@
 require 'spec_helper'
 
   def organisatie_naw # *
-    {:naam => 'Thorax', :postcode => '3800AD', :username => 'snagel'}
+    {:naam => 'Thorax', :postcode => '3800AD', :username => 'thebeanmachine'}
   end
   
   def jongere_naw_required_fields # *
@@ -38,18 +38,18 @@ require 'spec_helper'
         context "and with an minimum of the required and valid fields" do
           it "should create and match the status code '0' or '39'" do
             result = subject.create required_fields
-            result.status_code.should match(/0|39/)
+            result.status_code.should match(/^(0|39)$/)
           end
           
           it "should create a signalering based on a bsn" do
             result = subject.create(bsn.merge signaaltype)
-            result.status_code.should match(/0|39/)
+            result.status_code.should match(/^(0|39)$/)
           end
         end
         
         it "should create a signalering" do
           result = subject.create(jongere_naw_required_fields.merge(jongere_naw_optional_fields).merge(signaaltype).merge(einddatum))
-          result.status_code.should match(/0|39/)
+          result.status_code.should match(/^(0|39)$/)
         end    
         
         context "and with invalid fields" do

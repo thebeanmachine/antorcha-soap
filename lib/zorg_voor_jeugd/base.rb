@@ -43,6 +43,7 @@ module ZorgVoorJeugd
       
       unless result.soap_fault? or result.http_error?
         hash = result.to_hash
+        puts hash.inspect
         Response.new(hash[:nieuwe_signalering_response])
       else
         return Response.new(:status_code => 99, :omschrijving => result.soap_fault.to_s) if result.soap_fault?
@@ -51,6 +52,8 @@ module ZorgVoorJeugd
     end
     
     def update
+      # gevonden signaal uuid: 97523
+      
     end
     
   end

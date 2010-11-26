@@ -17,7 +17,8 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
         title "Gesignaleerd"
         body :nieuwe_signalering => {
           :status_code => response.status_code,
-          :omschrijving => response.status_omschrijving
+          :omschrijving => response.status_omschrijving,
+          :signaal_uuid => response.signaal_uuid 
         }
       end
     elsif response.warning?
@@ -26,7 +27,8 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
         body :nieuwe_signalering => {
           :status_code => response.status_code,
           :omschrijving => response.status_omschrijving,
-          :waarschuwing => true
+          :waarschuwing => true,
+          :signaal_uuid => response.signaal_uuid 
         }
       end
     else

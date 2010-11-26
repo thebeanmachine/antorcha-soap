@@ -23,7 +23,7 @@ describe ZorgVoorJeugdService do
     response = mock(ZorgVoorJeugd::Response)
     response.stub(:success?).and_return(true)
     
-    response.stub :status_code => 99, :status_omschrijving => 'Whoeps'
+    response.stub :status_code => 99, :status_omschrijving => 'Whoeps', :signaal_uuid => '97523'
     
     signalering = mock(ZorgVoorJeugd::Base)
     signalering.stub :create => response
@@ -52,7 +52,7 @@ describe ZorgVoorJeugdService do
    response.stub(:success?).and_return(false)
     response.stub(:warning?).and_return(true)
     
-    response.stub :status_code => 99, :status_omschrijving => 'Whoeps'
+    response.stub :status_code => 39, :status_omschrijving => 'Whoeps', :signaal_uuid => '97523'
     
     signalering = mock(ZorgVoorJeugd::Base)
     signalering.stub :create => response

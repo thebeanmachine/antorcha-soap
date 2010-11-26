@@ -12,70 +12,48 @@ describe ActionAntorcha::ReplyOnMessage do
   }
 
   before(:each) do
-    mock_message(:request).stub :effect_step_by_name => mock_step
+    #mock_message(:request).stub :effect_step_by_name => mock_step
     Message.stub :create => mock_message(:reply)
     mock_message(:reply).stub :valid? => true, :deliver => true
     mock_step.stub :first => mock_step
   end
   
-  it "should be able to reply" do
-    subject.reply :signaleer_iets do
-      title "titel"
-      body "lichaam"
+  describe ".reply" do
+    it "should create a reply object and store it" do
+      subject.reply :signaleer_iets do
+        title "titel"
+        body "lichaam"
+      end
+    
+      subject.replies.first.should == ActionAntorcha::Reply.new(mock_message(:request), :signaleer_iets)
+    end
+
+    it "should assign the body and title" do
+      subject.reply :signaleer_iets do
+        title "titel"
+        body "lichaam"
+      end
+    
+      subject.replies.first.title.should == "titel"
+      subject.replies.first.body.should == "lichaam"
     end
   end
   
-  it "passes title and body to message#create" do
-    Message.should_receive(:create).with(hash_including(:title => 'titel', :body => 'lichaam'))
-    
-    subject.reply :signaleer_iets do
-      title "titel"
-      body "lichaam"
+  describe ".deliver" do
+    it "should deliver nothing if there are no replies" do
+      subject.deliver
     end
-  end
-  
-  it "passes request_id to message#create" do
-    Message.should_receive(:create).with(hash_including(:request_id => mock_message(:request).id))
-    
-    subject.reply :signaleer_iets do
-      title "titel"
-      body "lichaam"
-    end
-  end
 
-  it "passes step_id to message#create" do
-    Message.should_receive(:create).with(hash_including(:step_id => mock_step.id))
-    
-    subject.reply :signaleer_iets do
-      title "titel"
-      body "lichaam"
+    it "should deliver the reply" do
+      mock_reply = mock(ActionAntorcha::Reply)
+      ActionAntorcha::Reply.stub :new => mock_reply
+      
+      subject.reply :hippie do end
+      
+      mock_reply.should_receive :deliver
+      subject.deliver
     end
-  end
 
-  it "passes successful status of the message validity as return value" do
-    result = subject.reply :signaleer_iets do
-      title "titel"
-      body "lichaam"
-    end
-    
-    result.should be_true
-  end
- 
-  it "passes failure status of the message validity as return value" do
-    mock_message(:reply).stub :valid? => false
-    mock_message(:reply).errors.stub(:full_messages)
-    
-    lambda { result = subject.reply :signaleer_iets do
-      title "titel"
-      body "lichaam"
-    end  }.should raise_error(/Message creation failed:/)    
-
-  end
-  
-  it "serializes the hash correctly" do
-    @reply = ActionAntorcha::Reply.new
-    @reply.body :aap => { :noot => 'mies'}
-    @reply.xml_serialized_body.should == "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<aap>\n  <noot>mies</noot>\n</aap>\n"
   end
   
 end

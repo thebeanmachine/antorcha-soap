@@ -1,5 +1,23 @@
 class ZorgVoorJeugdService < ActionAntorcha::Base
   
+  REPLIES = {
+  :success => {
+    :title => "Gesignaleerd",
+    :waarschuwing => false,
+    :failure => false
+    },
+  :warning => {
+    :title => "Gesignaleerd, echter met een waarschuwing",
+    :waarschuwing => true,
+    :failure => false
+    },
+  :failure => {
+    :title => "Signalering mislukt",
+    :waarschuwing => false,
+    :failure => true
+    }
+  }
+  
   def organisatie_naw
     lookup = ZorgVoorJeugdAlias.lookup_alias(organization_id, username)
     lookup.organisatie_as_hash if lookup
@@ -10,36 +28,31 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
   end
    
   def nieuwe_signalering
-    signalering = ZorgVoorJeugd::Base.new organisatie_naw
-    response = signalering.create body
-    if response.success?
-      reply :antwoordbericht_nieuwe_signalering do
-        title "Gesignaleerd"
-        body :nieuwe_signalering => {
-          :status_code => response.status_code,
-          :omschrijving => response.status_omschrijving
-        }
-      end
-    elsif response.warning?
-      reply :antwoordbericht_nieuwe_signalering do
-        title "Gesignaleerd, echter met een waarschuwing"
-        body :nieuwe_signalering => {
-          :status_code => response.status_code,
-          :omschrijving => response.status_omschrijving,
-          :waarschuwing => true
-        }
-      end
+    signalering = ZorgVoorJeugd::Base.new organisatie_naw    
+    response_to signalering.create body    
+  end
+  
+  def response_to signalering
+    
+    response_type = if signalering.success?
+      :success
+    elsif signalering.warning?
+      :warning
     else
-      reply :antwoordbericht_nieuwe_signalering do
-        title "Signalering mislukt"
-        body :nieuwe_signalering => {
-          :status_code => response.status_code,
-          :omschrijving => response.status_omschrijving,
-          :failure => true
-        }
-      end
+      :failure
+    end        
+    
+    reply :antwoordbericht_nieuwe_signalering do
+      title REPLIES[response_type][:title]
+      body :nieuwe_signalering => {
+        :status_code => signalering.status_code,
+        :omschrijving => signalering.status_omschrijving,
+        :waarschuwing => REPLIES[response_type][:waarschuwing],
+        :failure => REPLIES[response_type][:failure]
+        } 
     end
   end
+  
   
   def wijzig_signalering
   end

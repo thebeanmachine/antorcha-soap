@@ -63,12 +63,13 @@ describe ActionAntorcha::ReplyOnMessage do
  
   it "passes failure status of the message validity as return value" do
     mock_message(:reply).stub :valid? => false
-    result = subject.reply :signaleer_iets do
+    mock_message(:reply).errors.stub(:full_messages)
+    
+    lambda { result = subject.reply :signaleer_iets do
       title "titel"
       body "lichaam"
-    end
-    
-    result.should be_false
+    end  }.should raise_error(/Message creation failed:/)    
+
   end
   
   it "serializes the hash correctly" do

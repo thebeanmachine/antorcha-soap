@@ -19,7 +19,12 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
     response_to signaleerder.create(body)  
   end
-  
+
+  def wijzig_signalering
+    signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
+    response_to signaleerder.update(body)
+  end
+
   def response_to signalering
     
     response_type = if signalering.success?
@@ -43,7 +48,5 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
   end
   
   
-  def wijzig_signalering
-  end
   
 end

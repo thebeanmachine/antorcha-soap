@@ -22,7 +22,9 @@ module MessageRouting
     end
     
     def call message
-      service(message).send method
+      instance = service(message)
+      instance.send method
+      instance.deliver
     end
     
     def service message

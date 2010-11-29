@@ -60,18 +60,19 @@ describe ZorgVoorJeugd::Base do
         
         it "should raise an error about a wrong date" do
           result = subject.create required_fields.merge(:einddatum => "12-21-2012")
-          result.response[:status_code].should == 99
+          result.response[:status_code].should == '99'
         end
       end
 
     end
     
     context "with invalid 'organisatie_naw'" do
-      subject { ZorgVoorJeugd::Base.new :naam => 'Foo', :postcode => '0000AA', :username => 'foo-user' }
+      subject { ZorgVoorJeugd::Base.new :naam => 'Foo', :postcode => '6000AA', :username => 'foo-user' }
       
-      it "should raise status code 99" do
+      it "should raise status code 1, Onbekende organisatie" do
         result =  subject.create required_fields
-        result.response[:status_code].should == 99
+        result.response[:status_code].should == '1'
+        result.response[:status_omschrijving].should =~ /Onbekende organisatie/
       end
     end
   end

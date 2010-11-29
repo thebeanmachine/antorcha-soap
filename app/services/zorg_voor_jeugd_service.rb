@@ -6,26 +6,38 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     :failure => "Signalering mislukt"
   }
   
-  def organisatie_naw
-    lookup = ZorgVoorJeugdAlias.lookup_alias(organization_id, username)
-    lookup.organisatie_as_hash if lookup
-  end 
-  
-  def body
-    @params["nieuwe_signalering"].symbolize_keys!
-  end
    
   def nieuwe_signalering
-    signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
-    response_to signaleerder.create(body)  
+    if organisatie_naw
+      signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
+      response_to signaleerder.create(body), :antwoordbericht_nieuwe_signalering
+    else
+      reply :antwoordbericht_nieuwe_signalering do
+        title "Gebruiker en organisatie niet aangemeld bij koppeling"
+        body :wijzig_signalering => {
+          :status_code => 99,
+          :omschrijving => "Gebruiker en organisatie niet aangemeld bij koppeling"
+        }
+      end
+    end
   end
 
   def wijzig_signalering
-    signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
-    response_to signaleerder.update(body)
+    if organisatie_naw
+      signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
+      response_to signaleerder.update(body('wijzig_signalering')), :antwoordbericht_wijziging_signalering
+    else
+      reply :antwoordbericht_wijziging_signalering do
+        title "Gebruiker en organisatie niet aangemeld bij koppeling"
+        body :wijzig_signalering => {
+          :status_code => 99,
+          :omschrijving => "Gebruiker en organisatie niet aangemeld bij koppeling"
+        }
+      end
+    end
   end
 
-  def response_to signalering
+  def response_to signalering, step_symbol
     
     response_type = if signalering.success?
       :success
@@ -35,9 +47,9 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
       :failure
     end        
     
-    reply :antwoordbericht_nieuwe_signalering do
+    reply step_symbol do
       title REPLIES[response_type]
-      body :nieuwe_signalering => {
+      body step_symbol => {
         :status_code => signalering.status_code,
         :omschrijving => signalering.status_omschrijving,
         :signaal_uuid => signalering.signaal_uuid,
@@ -46,6 +58,20 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
       } 
     end
   end
+  
+  def organisatie_naw
+    @organisatie_naw ||= find_organisatie_naw
+  end 
+  
+  def find_organisatie_naw
+    lookup = ZorgVoorJeugdAlias.lookup_alias(organization_id, username)
+    lookup.organisatie_as_hash if lookup
+  end
+  
+  def body root = "nieuwe_signalering"
+    @params[root].symbolize_keys!
+  end
+  
   
   
   

@@ -46,8 +46,8 @@ module ZorgVoorJeugd
         puts hash.inspect
         Response.new(hash[:nieuwe_signalering_response])
       else
-        return Response.new(:status_code => 99, :omschrijving => result.soap_fault.to_s) if result.soap_fault?
-        return Response.new(:status_code => 99, :omschrijving => result.http_error.to_s)if result.http_error?
+        return Response.new(:status_code => '99', :status_omschrijving => result.soap_fault.to_s) if result.soap_fault?
+        return Response.new(:status_code => '99', :status_omschrijving => result.http_error.to_s) if result.http_error?
       end
     end
     
@@ -83,8 +83,8 @@ module ZorgVoorJeugd
         puts hash.inspect
         Response.new(hash[:wijzig_signalering_response])
       else
-        return Response.new(:status_code => 99, :omschrijving => result.soap_fault.to_s) if result.soap_fault?
-        return Response.new(:status_code => 99, :omschrijving => result.http_error.to_s)if result.http_error?
+        return Response.new(:status_code => '99', :status_omschrijving => result.soap_fault.to_s) if result.soap_fault?
+        return Response.new(:status_code => '99', :status_omschrijving => result.http_error.to_s)if result.http_error?
       end
     end
     

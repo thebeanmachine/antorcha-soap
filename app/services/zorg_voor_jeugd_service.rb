@@ -1,16 +1,22 @@
 class ZorgVoorJeugdService < ActionAntorcha::Base
   
-  REPLIES = {
+  NIEUWE_SIGNALERING_REPLIES = {
     :success => "Gesignaleerd",
     :warning => "Gesignaleerd, echter met een waarschuwing",
     :failure => "Signalering mislukt"
+  }
+  
+  WIJZIG_SIGNALERING_REPLIES = {
+    :success => "Signalering gewijzigd",
+    :warning => "Signalering gewijzigd, echter met een waarschuwing",
+    :failure => "Wijzigen signalering mislukt"
   }
   
    
   def nieuwe_signalering
     if organisatie_naw
       signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
-      response_to signaleerder.create(body), :antwoordbericht_nieuwe_signalering
+      response_to signaleerder.create(body), :antwoordbericht_nieuwe_signalering, NIEUWE_SIGNALERING_REPLIES
     else
       reply :antwoordbericht_nieuwe_signalering do
         title "Gebruiker en organisatie niet aangemeld bij koppeling"
@@ -25,7 +31,7 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
   def wijzig_signalering
     if organisatie_naw
       signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
-      response_to signaleerder.update(body('wijzig_signalering')), :antwoordbericht_wijziging_signalering
+      response_to signaleerder.update(body('wijzig_signalering')), :antwoordbericht_wijziging_signalering, WIJZIG_SIGNALERING_REPLIES
     else
       reply :antwoordbericht_wijziging_signalering do
         title "Gebruiker en organisatie niet aangemeld bij koppeling"
@@ -37,7 +43,7 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     end
   end
 
-  def response_to signalering, step_symbol
+  def response_to signalering, step_symbol, replies
     
     response_type = if signalering.success?
       :success
@@ -48,7 +54,7 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     end        
     
     reply step_symbol do
-      title REPLIES[response_type]
+      title replies[response_type]
       body step_symbol => {
         :status_code => signalering.status_code,
         :omschrijving => signalering.status_omschrijving,

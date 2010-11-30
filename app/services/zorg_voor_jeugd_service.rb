@@ -45,10 +45,6 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
   end
 
   def response_to signalering, step_symbol, replies
-    
-    puts "*" * 80
-    puts signalering.inspect
-    
     response_type = if signalering.success?
       :success
     elsif signalering.warning?
@@ -79,7 +75,11 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
   end
   
   def body root = "nieuwe_signalering"
-    @params[root].symbolize_keys!
+    if @params[root].kind_of?(Hash)
+      @params[root].symbolize_keys!
+    else
+      {}
+    end
   end
   
   

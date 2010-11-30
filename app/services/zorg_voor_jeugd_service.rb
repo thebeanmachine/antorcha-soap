@@ -15,13 +15,14 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
    
   def nieuwe_signalering
     if organisatie_naw
-      signaleerder = ZorgVoorJeugd::Base.new organisatie_naw    
-      response_to signaleerder.create(body), :antwoordbericht_nieuwe_signalering, NIEUWE_SIGNALERING_REPLIES
+
+      zorg_voor_jeugd = ZorgVoorJeugd::Base.new organisatie_naw    
+      response_to zorg_voor_jeugd.create(body), :antwoordbericht_nieuwe_signalering, NIEUWE_SIGNALERING_REPLIES
     else
       reply :antwoordbericht_nieuwe_signalering do
         title "Gebruiker en organisatie niet aangemeld bij koppeling"
-        body :wijzig_signalering => {
-          :status_code => 99,
+        body :antwoordbericht_nieuwe_signalering => {
+          :status_code => '99',
           :omschrijving => "Gebruiker en organisatie niet aangemeld bij koppeling"
         }
       end
@@ -35,8 +36,8 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
     else
       reply :antwoordbericht_wijziging_signalering do
         title "Gebruiker en organisatie niet aangemeld bij koppeling"
-        body :wijzig_signalering => {
-          :status_code => 99,
+        body :antwoordbericht_wijziging_signalering => {
+          :status_code => '99',
           :omschrijving => "Gebruiker en organisatie niet aangemeld bij koppeling"
         }
       end
@@ -44,6 +45,9 @@ class ZorgVoorJeugdService < ActionAntorcha::Base
   end
 
   def response_to signalering, step_symbol, replies
+    
+    puts "*" * 80
+    puts signalering.inspect
     
     response_type = if signalering.success?
       :success

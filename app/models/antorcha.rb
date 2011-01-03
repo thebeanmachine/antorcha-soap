@@ -17,7 +17,7 @@ class Antorcha < ActiveRecord::Base
   
   private
   def only_one_created_antorcha_allowed
-    errors.add_to_base 'Er is reeds een antorcha aangemaakt.' unless Antorcha.count == 0
+    errors.add_to_base 'Er is reeds een Antorcha aangemaakt.' unless Antorcha.count == 0
   end
   
 end

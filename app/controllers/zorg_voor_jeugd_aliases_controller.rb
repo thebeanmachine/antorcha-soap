@@ -44,7 +44,7 @@ class ZorgVoorJeugdAliasesController < ApplicationController
 
     respond_to do |format|
       if @zorg_voor_jeugd_alias.save
-        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => 'ZorgVoorJeugdAlias was successfully created.') }
+        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => 'ZorgVoorJeugdAlias is succesvol aangemaakt.') }
         format.xml  { render :xml => @zorg_voor_jeugd_alias, :status => :created, :location => @zorg_voor_jeugd_alias }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class ZorgVoorJeugdAliasesController < ApplicationController
 
     respond_to do |format|
       if @zorg_voor_jeugd_alias.update_attributes(params[:zorg_voor_jeugd_alias])
-        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => 'ZorgVoorJeugdAlias was successfully updated.') }
+        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => 'ZorgVoorJeugdAlias is succesvol aangepast.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

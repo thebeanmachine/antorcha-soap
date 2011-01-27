@@ -42,7 +42,7 @@ class AntorchasController < ApplicationController
   def destroy
     @antorcha = Antorcha.find(params[:id])
     @antorcha.destroy
-    flash[:notice] = "Gekoppelde antorcha verwijderd."
+    flash[:notice] = "Koppeling met Antorcha succesvol verwijderd."
     redirect_to antorchas_url
   end
 end

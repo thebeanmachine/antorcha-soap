@@ -18,7 +18,7 @@ class AntorchasController < ApplicationController
   def create
     @antorcha = Antorcha.new(params[:antorcha])
     if @antorcha.save
-      flash[:notice] = "Antorcha met succes aangemaakt."
+      flash[:notice] = "Koppeling met Antorcha succesvol aangemaakt"
       redirect_to antorchas_url
     else
       render :action => 'new'

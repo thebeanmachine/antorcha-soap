@@ -208,7 +208,7 @@ h1.as_in_table .sender { width: 20em; }
   border: 1px solid #555555;
 }
 #header h1 {
-  float: right;
+  float: left;
   margin: 12px;
   font-weight: normal;
 }

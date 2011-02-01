@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
     redirect_to edit_antorcha_url(Antorcha.instance), :notice => "Er kon geen verbinding gemaakt worden met de Antorcha omdat er geen inloggegevens zijn opgegeven."
   end
   
+  rescue_from "SocketError" do
+    redirect_to edit_antorcha_url(Antorcha.instance), :notice => "Antorcha kon niet worden gevonden op de aangegeven locatie, controleer de gegevens."
+  end
+  
   rescue_from "Errno::ECONNREFUSED" do
     redirect_to edit_antorcha_url(Antorcha.instance), :notice => "Er kon geen verbinding gemaakt worden met de Antorcha omdat de connectie werd geweigerd."
   end

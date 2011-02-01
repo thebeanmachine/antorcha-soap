@@ -2,8 +2,9 @@ class ZorgVoorJeugdAliasesController < ApplicationController
   # GET /zorg_voor_jeugd_aliases
   # GET /zorg_voor_jeugd_aliases.xml
   def index
-    @zorg_voor_jeugd_aliases = ZorgVoorJeugdAlias.all
-
+    a = Antorcha.instance
+    @zorg_voor_jeugd_aliases = ZorgVoorJeugdAlias.all if a and ZorgVoorJeugdAlias.first.organization
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @zorg_voor_jeugd_aliases }
@@ -44,7 +45,7 @@ class ZorgVoorJeugdAliasesController < ApplicationController
 
     respond_to do |format|
       if @zorg_voor_jeugd_alias.save
-        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => 'ZorgVoorJeugdAlias is succesvol aangemaakt.') }
+        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => "De Zorg voor Jeugd-alias voor de Antorcha-gebruiker #{@zorg_voor_jeugd_alias.organization_username} is aangemaakt.") }
         format.xml  { render :xml => @zorg_voor_jeugd_alias, :status => :created, :location => @zorg_voor_jeugd_alias }
       else
         format.html { render :action => "new" }
@@ -60,7 +61,7 @@ class ZorgVoorJeugdAliasesController < ApplicationController
 
     respond_to do |format|
       if @zorg_voor_jeugd_alias.update_attributes(params[:zorg_voor_jeugd_alias])
-        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => 'ZorgVoorJeugdAlias is succesvol aangepast.') }
+        format.html { redirect_to(@zorg_voor_jeugd_alias, :notice => 'De Zorg voor Jeugd-alias is aangepast.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -73,10 +74,11 @@ class ZorgVoorJeugdAliasesController < ApplicationController
   # DELETE /zorg_voor_jeugd_aliases/1.xml
   def destroy
     @zorg_voor_jeugd_alias = ZorgVoorJeugdAlias.find(params[:id])
+    naam = @zorg_voor_jeugd_alias.organization_username
     @zorg_voor_jeugd_alias.destroy
 
     respond_to do |format|
-      format.html { redirect_to(zorg_voor_jeugd_aliases_url) }
+      format.html { redirect_to(zorg_voor_jeugd_aliases_url, :notice => "De Zorg voor Jeugd-alias voor #{naam} is verwijderd.") }
       format.xml  { head :ok }
     end
   end

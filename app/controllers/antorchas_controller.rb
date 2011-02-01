@@ -18,7 +18,7 @@ class AntorchasController < ApplicationController
   def create
     @antorcha = Antorcha.new(params[:antorcha])
     if @antorcha.save
-      flash[:notice] = "Antorcha met succes aangemaakt."
+      flash[:notice] = "Koppeling met Antorcha succesvol aangemaakt"
       redirect_to antorchas_url
     else
       render :action => 'new'
@@ -42,7 +42,7 @@ class AntorchasController < ApplicationController
   def destroy
     @antorcha = Antorcha.find(params[:id])
     @antorcha.destroy
-    flash[:notice] = "Gekoppelde antorcha verwijderd."
+    flash[:notice] = "Koppeling met Antorcha succesvol verwijderd."
     redirect_to antorchas_url
   end
 end

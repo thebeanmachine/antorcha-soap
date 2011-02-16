@@ -59,7 +59,7 @@ describe AntorchasController do
       Antorcha.should_receive(:find).with(antorcha.id.to_s).and_return(antorcha)
       antorcha.stub(:destroy).and_return(antorcha)
       delete :destroy, :id => antorcha.id
-      flash[:notice].should =~ /Successfully/
+      flash[:notice].should =~ /succesvol/
       Antorcha.exists?(antorcha.id).should be_false
     end
   end 

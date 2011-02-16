@@ -5,10 +5,22 @@ describe ZorgVoorJeugdAliasesController do
   def mock_zorg_voor_jeugd_alias(stubs={})
     @mock_zorg_voor_jeugd_alias ||= mock_model(ZorgVoorJeugdAlias, stubs)
   end
+  
+  def mock_organization(stubs={})
+    @mock_organization ||= mock_model(Organization, stubs)
+  end
+  
+  def mock_antorcha_instance(stubs={:first=>"mock_organization"})
+    @mock_antorcha_instance ||= mock_model(Antorcha, stubs)
+  end
 
   describe "GET index" do
     it "assigns all zorg_voor_jeugd_aliases as @zorg_voor_jeugd_aliases" do
-      ZorgVoorJeugdAlias.stub(:find).with(:all).and_return([mock_zorg_voor_jeugd_alias])
+      Antorcha.stub(:instance).and_return(mock_antorcha_instance)
+      ZorgVoorJeugdAlias.stub(:first).and_return(mock_zorg_voor_jeugd_alias)
+      @mock_zorg_voor_jeugd_alias.stub(:organization).and_return(mock_organization)
+      
+      ZorgVoorJeugdAlias.stub(:all).and_return([mock_zorg_voor_jeugd_alias])
       get :index
       assigns[:zorg_voor_jeugd_aliases].should == [mock_zorg_voor_jeugd_alias]
     end
@@ -39,16 +51,16 @@ describe ZorgVoorJeugdAliasesController do
   end
 
   describe "POST create" do
-
+    
     describe "with valid params" do
       it "assigns a newly created zorg_voor_jeugd_alias as @zorg_voor_jeugd_alias" do
-        ZorgVoorJeugdAlias.stub(:new).with({'these' => 'params'}).and_return(mock_zorg_voor_jeugd_alias(:save => true))
+        ZorgVoorJeugdAlias.stub(:new).with({'these' => 'params'}).and_return(mock_zorg_voor_jeugd_alias(:save => true,:organization_username=>"fakeusername"))
         post :create, :zorg_voor_jeugd_alias => {:these => 'params'}
         assigns[:zorg_voor_jeugd_alias].should equal(mock_zorg_voor_jeugd_alias)
       end
 
       it "redirects to the created zorg_voor_jeugd_alias" do
-        ZorgVoorJeugdAlias.stub(:new).and_return(mock_zorg_voor_jeugd_alias(:save => true))
+        ZorgVoorJeugdAlias.stub(:new).and_return(mock_zorg_voor_jeugd_alias(:save => true,:organization_username=>"fakeusername"))
         post :create, :zorg_voor_jeugd_alias => {}
         response.should redirect_to(zorg_voor_jeugd_alias_url(mock_zorg_voor_jeugd_alias))
       end
@@ -116,13 +128,13 @@ describe ZorgVoorJeugdAliasesController do
 
   describe "DELETE destroy" do
     it "destroys the requested zorg_voor_jeugd_alias" do
-      ZorgVoorJeugdAlias.should_receive(:find).with("37").and_return(mock_zorg_voor_jeugd_alias)
+      ZorgVoorJeugdAlias.should_receive(:find).with("37").and_return(mock_zorg_voor_jeugd_alias(:organization_username=>"fakeusername"))
       mock_zorg_voor_jeugd_alias.should_receive(:destroy)
       delete :destroy, :id => "37"
     end
 
     it "redirects to the zorg_voor_jeugd_aliases list" do
-      ZorgVoorJeugdAlias.stub(:find).and_return(mock_zorg_voor_jeugd_alias(:destroy => true))
+      ZorgVoorJeugdAlias.stub(:find).and_return(mock_zorg_voor_jeugd_alias(:destroy => true,:organization_username=>"fakeusername"))
       delete :destroy, :id => "1"
       response.should redirect_to(zorg_voor_jeugd_aliases_url)
     end

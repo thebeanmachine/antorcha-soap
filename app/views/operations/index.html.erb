@@ -3,6 +3,7 @@
 <table class="styled">
   <tr>
     <th>Betreft Bericht ID</th>
+		<th>Titel</th>
 		<th>Gemaakt op</th>
 		<th>Gewijzigd op</th>
   </tr>
@@ -10,6 +11,7 @@
 <% @operations.each do |operation| %>
   <tr>
     <td><%=h operation.message_id %></td>
+		<td><%=h Message.find(operation.message_id).title %></td>
 		<td><%=h operation.created_at %></td>
 		<td><%=h operation.updated_at %></td>
   </tr>

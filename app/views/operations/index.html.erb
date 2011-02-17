@@ -11,7 +11,7 @@
 <% @operations.each do |operation| %>
   <tr>
     <td><%=h operation.message_id %></td>
-		<td><%=h Message.find(operation.message_id).title %></td>
+		<td><%=h operation.message_title %></td>
 		<td><%=h operation.created_at %></td>
 		<td><%=h operation.updated_at %></td>
   </tr>

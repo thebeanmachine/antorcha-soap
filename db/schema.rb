@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101122131837) do
+ActiveRecord::Schema.define(:version => 20110217124939) do
 
   create_table "antorchas", :force => true do |t|
     t.string   "url"
@@ -33,9 +33,10 @@ ActiveRecord::Schema.define(:version => 20101122131837) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "operations", :force => true do |t|
-    t.integer  "message_id", :null => false
+    t.integer  "message_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "message_title"
   end
 
   add_index "operations", ["message_id"], :name => "index_operations_on_message_id", :unique => true

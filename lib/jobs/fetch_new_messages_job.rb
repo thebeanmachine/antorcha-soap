@@ -6,7 +6,7 @@ class Jobs::FetchNewMessagesJob
   
   def receive
     @messages.each do |message|
-      Operation.create :message_id => message.id
+      Operation.create(:message_id => message.id, :message_title => message.title)
     end
   end
   

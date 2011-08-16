@@ -32,7 +32,7 @@ class AntorchasController < ApplicationController
   def update
     @antorcha = Antorcha.find(params[:id])
     if @antorcha.update_attributes(params[:antorcha])
-      flash[:notice] = "Gekoppelde antorcha bijgewerkt."
+      flash[:notice] = "Koppeling met Antorcha succesvol bijgewerkt."
       redirect_to @antorcha
     else
       render :action => 'edit'
